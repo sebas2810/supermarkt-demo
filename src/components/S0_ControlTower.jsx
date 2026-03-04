@@ -1,3 +1,17 @@
+/**
+ * S0_ControlTower — Supply Chain Control Tower
+ *
+ * Entry screen for the Predictive Fresh Supply Chain workflow.
+ * Demonstrates real-time AI monitoring with live incident lifecycle:
+ *   1. Incidents appear in the queue as MONITORING
+ *   2. AI agents auto-resolve most (MONITORING → EXECUTING → AUTO-RESOLVED)
+ *   3. Threshold breaches escalate for human investigation (→ ESCALATED)
+ *
+ * Data sources: IoT Sensors, RELEX Forecast, Weather API, POS Stream, Supplier Feed
+ * AI layers: ML anomaly detection → SLM classification → LLM synthesis → Agentic execution
+ *
+ * Consumer Goods Forum — Food Waste / Agentic AI use case
+ */
 import { useState, useEffect, useRef } from 'react'
 import Sparkline from './shared/Sparkline'
 import data from '../data/command_center_data.json'
