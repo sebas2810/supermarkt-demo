@@ -1,0 +1,61 @@
+[
+  {
+    "brand": "Albert Heijn",
+    "country": "Netherlands",
+    "stores": 1063,
+    "status": "live",
+    "status_label": "LIVE",
+    "week": 13,
+    "interventions_90d": 847,
+    "waste_reduction_pct": 23,
+    "detail": "5-layer stack operational. 847 interventions in 90 days. 23% fresh waste reduction vs baseline."
+  },
+  {
+    "brand": "Food Lion",
+    "country": "United States",
+    "stores": 1108,
+    "status": "deploying",
+    "status_label": "DEPLOYING",
+    "week": 3,
+    "detail": "Data connectors: complete. SLM fine-tuning: in progress (Day 12/21). Guardrail workshop: scheduled Week 3.",
+    "milestones": [
+      { "name": "Data connectors", "status": "complete" },
+      { "name": "SLM fine-tuning", "status": "in_progress", "progress": 57 },
+      { "name": "Guardrail workshop", "status": "scheduled" },
+      { "name": "KPI baseline", "status": "pending" },
+      { "name": "Parallel run", "status": "pending" }
+    ]
+  },
+  {
+    "brand": "Delhaize",
+    "country": "Belgium",
+    "stores": 764,
+    "status": "planned",
+    "status_label": "PLANNED",
+    "detail": "Scope confirmed. Belgian supplier vocabulary for SLM identified. Start: Month 4."
+  },
+  {
+    "brand": "Hannaford",
+    "country": "United States",
+    "stores": 189,
+    "status": "planned",
+    "status_label": "PLANNED",
+    "detail": "New England seasonality patterns catalogued. Start: Month 6."
+  },
+  {
+    "brand": "Stop & Shop",
+    "country": "United States",
+    "stores": 415,
+    "status": "planned",
+    "status_label": "PLANNED",
+    "detail": "Northeast corridor logistics mapping underway. Start: Month 7."
+  },
+  {
+    "brand": "+11 Remaining Brands",
+    "country": "Global",
+    "stores": 3500,
+    "status": "template",
+    "status_label": "TEMPLATE READY",
+    "detail": "Scale Engine template ready. JIB sequencing Q3 2026."
+  }
+]

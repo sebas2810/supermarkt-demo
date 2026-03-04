@@ -1,0 +1,48 @@
+{
+  "dashboard": {
+    "system": "You are an AI analytics assistant for the RAISE Platform — an AI-powered supply chain management system deployed across Ahold Delhaize brands. You generate executive KPI dashboards based on operational data. Always respond with valid JSON matching the specified schema. Use concise, data-driven language appropriate for C-level retail executives.",
+    "user_template": "Generate a KPI dashboard summary based on the following operational data:\n\n{data}\n\nRespond with JSON matching this schema:\n{\n  \"headline\": \"One-sentence executive summary\",\n  \"brandBreakdown\": [\n    {\n      \"brand\": \"Brand name\",\n      \"status\": \"healthy|degraded|alert\",\n      \"highlight\": \"Key metric or trend\",\n      \"trend\": \"up|down|flat\"\n    }\n  ],\n  \"weeklyComparison\": {\n    \"summary\": \"One sentence comparing to last week\",\n    \"highlights\": [\"Highlight 1\", \"Highlight 2\"]\n  },\n  \"outliers\": [\n    {\n      \"brand\": \"Brand name\",\n      \"severity\": \"amber|red\",\n      \"message\": \"What needs attention\"\n    }\n  ],\n  \"projection\": \"Forward-looking statement about next 4 weeks\"\n}"
+  },
+  "query": {
+    "system": "You are an AI analytics assistant for the RAISE Platform. Answer questions about supply chain operations, KPIs, and AI agent performance using the provided data. Be concise and data-driven. If you reference numbers, cite the source metric. Respond with JSON: { \"answer\": \"Your response text\", \"relatedMetrics\": [{ \"name\": \"Metric\", \"value\": \"Value\" }] }",
+    "user_template": "Based on this operational data:\n\n{data}\n\nAnswer this question: {question}\n\nRespond with JSON: { \"answer\": \"...\", \"relatedMetrics\": [{ \"name\": \"...\", \"value\": \"...\" }] }"
+  },
+  "fallback_dashboard": {
+    "headline": "RAISE Platform operating at 94% health across 2 active brands with 16 agents processing 847 interventions in the last 90 days.",
+    "brandBreakdown": [
+      {
+        "brand": "Albert Heijn",
+        "status": "healthy",
+        "highlight": "26% waste reduction — exceeding 25% target. 4 use cases active.",
+        "trend": "up"
+      },
+      {
+        "brand": "Food Lion",
+        "status": "degraded",
+        "highlight": "11% waste reduction — below 20% target. SLM retraining in progress.",
+        "trend": "flat"
+      },
+      {
+        "brand": "Delhaize",
+        "status": "healthy",
+        "highlight": "Onboarding scheduled. Belgian supplier vocabulary identified.",
+        "trend": "flat"
+      }
+    ],
+    "weeklyComparison": {
+      "summary": "Overall waste reduction improved 0.1pp to 3.0% this week, with Albert Heijn driving the majority of gains.",
+      "highlights": [
+        "Albert Heijn fresh waste at all-time low of 3.0%",
+        "Food Lion demand sensing model queued for retraining after accuracy drop"
+      ]
+    },
+    "outliers": [
+      {
+        "brand": "Food Lion",
+        "severity": "amber",
+        "message": "Demand sensing accuracy at 82% (target: 90%). SLM retraining scheduled for tonight."
+      }
+    ],
+    "projection": "With current trajectory, expect Albert Heijn to reach 28% waste reduction by end of Q1. Food Lion SLM retrain should restore demand sensing to >88% within 2 weeks."
+  }
+}

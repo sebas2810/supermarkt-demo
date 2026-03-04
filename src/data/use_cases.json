@@ -1,0 +1,162 @@
+[
+  {
+    "id": "uc-fresh-waste",
+    "name": "Predictive Fresh Waste Prevention",
+    "domain": "Fresh",
+    "domainColor": "#00D5D0",
+    "description": "AI-driven cold chain monitoring, risk scoring, and autonomous markdown execution to prevent fresh product waste before it occurs.",
+    "aiLayers": ["ML", "SLM", "LLM", "Agent", "Twin"],
+    "status": "Live",
+    "executionModel": "hybrid",
+    "scriptedDescription": "LangGraph orchestrates the deterministic pipeline: IoT ingestion \u2192 risk scoring \u2192 SLM classification \u2192 conditional routing \u2192 human gate \u2192 action execution \u2192 feedback loop.",
+    "unscriptedDescription": "Claude generates decision briefs, runs what-if scenario simulations, and supports interactive deliberation with the Category Manager before approval.",
+    "brands": [
+      { "brandId": "albert-heijn", "status": "healthy" },
+      { "brandId": "food-lion", "status": "degraded" },
+      { "brandId": "delhaize", "status": "healthy" }
+    ],
+    "kpis": [
+      { "name": "Waste Reduction", "value": "26%", "target": "25%" },
+      { "name": "Interventions (90d)", "value": "847", "target": "500+" },
+      { "name": "Revenue Recovered", "value": "\u20AC1.2M", "target": "\u20AC1M" }
+    ],
+    "hasWorkflow": true
+  },
+  {
+    "id": "uc-demand-sensing",
+    "name": "AI Demand Sensing",
+    "domain": "Demand",
+    "domainColor": "#1DB8F2",
+    "description": "Real-time demand signal fusion combining POS, weather, events, and competitor pricing to improve forecast accuracy by up to 35%.",
+    "aiLayers": ["ML", "SLM", "LLM"],
+    "status": "Pilot",
+    "executionModel": "hybrid",
+    "scriptedDescription": "LangGraph manages the signal fusion pipeline: data ingestion \u2192 feature engineering \u2192 ensemble scoring \u2192 anomaly detection \u2192 forecast adjustment.",
+    "unscriptedDescription": "Claude analyses forecast deviations, generates narrative explanations for demand shifts, and proposes corrective actions for review.",
+    "brands": [
+      { "brandId": "albert-heijn", "status": "healthy" },
+      { "brandId": "delhaize", "status": "degraded" }
+    ],
+    "kpis": [
+      { "name": "Forecast Accuracy", "value": "+12pp", "target": "+15pp" },
+      { "name": "Out-of-Stock", "value": "-18%", "target": "-20%" }
+    ],
+    "hasWorkflow": false
+  },
+  {
+    "id": "uc-logistics-routing",
+    "name": "Dynamic DC Routing",
+    "domain": "Logistics",
+    "domainColor": "#FF816E",
+    "description": "Optimise distribution centre routing in real-time based on demand signals, capacity constraints, and transport availability.",
+    "aiLayers": ["ML", "Agent", "Twin"],
+    "status": "Pilot",
+    "executionModel": "scripted",
+    "scriptedDescription": "LangGraph orchestrates the full routing optimisation: demand aggregation \u2192 capacity check \u2192 route scoring \u2192 constraint validation \u2192 dispatch.",
+    "unscriptedDescription": "Claude reviews edge cases where routing constraints conflict, generating alternative solutions and trade-off analyses.",
+    "brands": [
+      { "brandId": "albert-heijn", "status": "healthy" }
+    ],
+    "kpis": [
+      { "name": "Route Efficiency", "value": "+8%", "target": "+10%" },
+      { "name": "Delivery Windows", "value": "94%", "target": "95%" }
+    ],
+    "hasWorkflow": false
+  },
+  {
+    "id": "uc-promo-effectiveness",
+    "name": "Promotion ROI Optimiser",
+    "domain": "Commercial",
+    "domainColor": "#FEB100",
+    "description": "Predict promotion uplift and cannibalisation effects using historical pattern analysis and competitive intelligence.",
+    "aiLayers": ["ML", "LLM"],
+    "status": "Available",
+    "executionModel": "unscripted",
+    "scriptedDescription": "Lightweight LangGraph pipeline for data collection and feature extraction from promotional calendars.",
+    "unscriptedDescription": "Claude drives the core analysis: interpreting promotion patterns, simulating uplift scenarios, and recommending optimal promotion strategies through interactive dialogue.",
+    "brands": [],
+    "kpis": [
+      { "name": "Promo ROI", "value": "N/A", "target": "+15%" },
+      { "name": "Cannibalisation", "value": "N/A", "target": "-30%" }
+    ],
+    "hasWorkflow": false
+  },
+  {
+    "id": "uc-supplier-risk",
+    "name": "Supplier Risk Monitor",
+    "domain": "Fresh",
+    "domainColor": "#00D5D0",
+    "description": "Continuous monitoring of supplier quality metrics, delivery performance, and risk indicators with automated escalation.",
+    "aiLayers": ["ML", "SLM", "Agent"],
+    "status": "Live",
+    "executionModel": "scripted",
+    "scriptedDescription": "LangGraph manages the monitoring pipeline: metric ingestion \u2192 anomaly detection \u2192 risk classification \u2192 conditional escalation \u2192 alert dispatch.",
+    "unscriptedDescription": "Claude generates supplier risk narratives and recommends remediation strategies when anomalies are detected.",
+    "brands": [
+      { "brandId": "albert-heijn", "status": "healthy" },
+      { "brandId": "food-lion", "status": "healthy" }
+    ],
+    "kpis": [
+      { "name": "Resolution Time", "value": "1.1 days", "target": "2 days" },
+      { "name": "Quality Score", "value": "97%", "target": "95%" }
+    ],
+    "hasWorkflow": false
+  },
+  {
+    "id": "uc-auto-replenishment",
+    "name": "Autonomous Replenishment",
+    "domain": "Demand",
+    "domainColor": "#1DB8F2",
+    "description": "Self-adjusting store replenishment engine that learns from local demand patterns and automatically adapts order quantities.",
+    "aiLayers": ["ML", "SLM", "Agent"],
+    "status": "Available",
+    "executionModel": "scripted",
+    "scriptedDescription": "LangGraph orchestrates end-to-end: demand prediction \u2192 inventory check \u2192 order calculation \u2192 constraint validation \u2192 auto-submit \u2192 confirmation.",
+    "unscriptedDescription": "Claude handles exception analysis when orders deviate significantly from patterns, providing explanations and adjustment recommendations.",
+    "brands": [],
+    "kpis": [
+      { "name": "Shelf Availability", "value": "N/A", "target": "98%" },
+      { "name": "Overstock", "value": "N/A", "target": "-25%" }
+    ],
+    "hasWorkflow": false
+  },
+  {
+    "id": "uc-energy-optimisation",
+    "name": "Store Energy Optimisation",
+    "domain": "Logistics",
+    "domainColor": "#FF816E",
+    "description": "AI-controlled refrigeration and HVAC scheduling based on footfall prediction, external temperature, and energy pricing.",
+    "aiLayers": ["ML", "Twin"],
+    "status": "Available",
+    "executionModel": "hybrid",
+    "scriptedDescription": "LangGraph controls the scheduling loop: weather forecast \u2192 footfall prediction \u2192 energy pricing \u2192 schedule optimisation \u2192 equipment dispatch.",
+    "unscriptedDescription": "Claude simulates energy scenarios under different weather and pricing conditions, helping facilities managers choose optimal configurations.",
+    "brands": [],
+    "kpis": [
+      { "name": "Energy Savings", "value": "N/A", "target": "15%" },
+      { "name": "CO\u2082 Reduction", "value": "N/A", "target": "12%" }
+    ],
+    "hasWorkflow": false
+  },
+  {
+    "id": "uc-markdown-intelligence",
+    "name": "Dynamic Markdown Intelligence",
+    "domain": "Commercial",
+    "domainColor": "#FEB100",
+    "description": "Optimal markdown timing and depth using demand elasticity models, competitor pricing, and remaining shelf life estimation.",
+    "aiLayers": ["ML", "SLM", "LLM", "Agent"],
+    "status": "Pilot",
+    "executionModel": "hybrid",
+    "scriptedDescription": "LangGraph manages the pricing pipeline: shelf life estimation \u2192 elasticity scoring \u2192 competitor scan \u2192 price calculation \u2192 approval gate \u2192 POS update.",
+    "unscriptedDescription": "Claude generates markdown strategy recommendations, simulates customer response scenarios, and enables collaborative pricing decisions.",
+    "brands": [
+      { "brandId": "albert-heijn", "status": "healthy" },
+      { "brandId": "delhaize", "status": "healthy" }
+    ],
+    "kpis": [
+      { "name": "Markdown Yield", "value": "+28%", "target": "+30%" },
+      { "name": "Timing Accuracy", "value": "86%", "target": "90%" }
+    ],
+    "hasWorkflow": false
+  }
+]

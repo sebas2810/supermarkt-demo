@@ -1,0 +1,138 @@
+{
+  "incident_id": "SC-2025-4421-BKT",
+  "timestamp": "2025-03-12T07:30:00+01:00",
+  "detection_time": "2025-03-12T06:15:00+01:00",
+  "sku": "AH-4421",
+  "description": "Seeded Sourdough 400g",
+  "brand": "AH Huismerk",
+  "category": "Bakery",
+  "supplier": "Bakker Bart Zaandam",
+  "supplier_id": "BKT-NL-0042",
+  "dc": "Amstel DC",
+  "dc_id": "DC-AMS-01",
+  "at_risk_units": 3400,
+  "unit_price": 2.29,
+  "stores_affected": [
+    { "id": "AH-0041", "name": "AH Almere Stad", "units": 1200 },
+    { "id": "AH-0087", "name": "AH Utrecht Leidseweg", "units": 1100 },
+    { "id": "AH-0112", "name": "AH Amsterdam Bijlmer", "units": 1100 }
+  ],
+  "cold_chain": {
+    "exceedance_degrees_c": 2.3,
+    "exceedance_duration_hours": 4.2,
+    "threshold_c": 4.0,
+    "peak_temp_c": 6.3,
+    "exceedance_start": "2025-03-12T01:10:00+01:00",
+    "exceedance_end": "2025-03-12T05:22:00+01:00",
+    "temperature_readings": [
+      { "time": "22:00", "temp": 3.8 },
+      { "time": "22:30", "temp": 3.9 },
+      { "time": "23:00", "temp": 4.0 },
+      { "time": "23:30", "temp": 4.1 },
+      { "time": "00:00", "temp": 4.3 },
+      { "time": "00:30", "temp": 4.8 },
+      { "time": "01:00", "temp": 5.2 },
+      { "time": "01:30", "temp": 5.8 },
+      { "time": "02:00", "temp": 6.1 },
+      { "time": "02:30", "temp": 6.3 },
+      { "time": "03:00", "temp": 6.2 },
+      { "time": "03:30", "temp": 6.0 },
+      { "time": "04:00", "temp": 5.7 },
+      { "time": "04:30", "temp": 5.3 },
+      { "time": "05:00", "temp": 4.8 },
+      { "time": "05:30", "temp": 4.2 },
+      { "time": "06:00", "temp": 3.9 },
+      { "time": "06:30", "temp": 3.7 }
+    ]
+  },
+  "shelf_life": {
+    "original_hours": 72,
+    "reduction_hours": 18,
+    "effective_hours": 54,
+    "expiry_original": "2025-03-14T14:00:00+01:00",
+    "expiry_adjusted": "2025-03-13T20:00:00+01:00"
+  },
+  "sell_through": {
+    "forecast_vs_actual": -0.23,
+    "forecast_units_per_day": 420,
+    "actual_units_per_day": 323,
+    "pattern": "3-day lag following competitor promotion",
+    "competitor": "Jumbo",
+    "daily_data": [
+      { "day": "Mon", "forecast": 420, "actual": 310 },
+      { "day": "Tue", "forecast": 420, "actual": 328 },
+      { "day": "Wed", "forecast": 420, "actual": 332 },
+      { "day": "Thu", "forecast": 380, "actual": null },
+      { "day": "Fri", "forecast": 450, "actual": null }
+    ]
+  },
+  "predictions": {
+    "waste_units_no_action": 2950,
+    "waste_pct_no_action": 0.87,
+    "waste_units_with_action": 600,
+    "waste_pct_with_action": 0.18,
+    "waste_avoided": 2800,
+    "risk_score": 8.4,
+    "confidence": 0.91
+  },
+  "recommended_action": {
+    "type": "markdown",
+    "original_price": 2.29,
+    "markdown_price": 1.49,
+    "discount_pct": 0.35,
+    "execution_deadline": "2025-03-13T11:00:00+01:00",
+    "expected_units_sold": 2800,
+    "expected_waste_avoidance_pct": 0.82,
+    "revenue_recovered": 4172.00,
+    "revenue_lost_vs_full_price": 2240.00
+  },
+  "classification": {
+    "risk_tier": 3,
+    "risk_label": "Autonomous Action Authorised",
+    "guardrail_checks": [
+      { "check": "Discount threshold", "threshold": "≤40%", "actual": "35%", "status": "PASS" },
+      { "check": "Unit volume", "threshold": "≤5,000", "actual": "3,400", "status": "PASS" },
+      { "check": "Store capacity", "threshold": "Receiving confirmed", "actual": "Confirmed", "status": "PASS" },
+      { "check": "Supplier contract clause", "threshold": "No blocking clause", "actual": "AH-BKT-2024 CLEAR", "status": "PASS" }
+    ]
+  },
+  "agent_actions": [
+    { "time": "07:39:14", "action": "Guardrail check passed — Discount 35%, within 40% threshold", "status": "complete" },
+    { "time": "07:39:15", "action": "Unit volume 3,400 — within 5,000 unit autonomous threshold", "status": "complete" },
+    { "time": "07:39:16", "action": "Supplier contract clause AH-BKT-2024 — markdown clause CLEAR", "status": "complete" },
+    { "time": "07:39:17", "action": "Executing markdown AH-4421 → €1.49 at AH-0041 Almere Stad", "status": "executing" },
+    { "time": "07:39:18", "action": "PRISM markdown confirmed — store AH-0041", "status": "complete" },
+    { "time": "07:39:19", "action": "Executing markdown AH-4421 → €1.49 at AH-0087 Utrecht Leidseweg", "status": "executing" },
+    { "time": "07:39:20", "action": "PRISM markdown confirmed — store AH-0087", "status": "complete" },
+    { "time": "07:39:21", "action": "Executing markdown AH-4421 → €1.49 at AH-0112 Amsterdam Bijlmer", "status": "executing" },
+    { "time": "07:39:22", "action": "PRISM markdown confirmed — store AH-0112", "status": "complete" },
+    { "time": "07:39:23", "action": "Generating supplier quality alert — Bakker Bart Zaandam", "status": "executing" },
+    { "time": "07:39:24", "action": "Alert filed — Ref SC-2025-4421-BKT — evidence pack attached", "status": "complete" },
+    { "time": "07:39:25", "action": "Logging decision to Digital Twin feedback loop", "status": "executing" },
+    { "time": "07:39:26", "action": "Audit trail complete — available for governance dashboard", "status": "complete" },
+    { "time": "07:39:26", "action": "Category buyer notified — brief delivered to inbox", "status": "complete" }
+  ],
+  "digital_twin": {
+    "monte_carlo_runs": 500,
+    "waste_avoided_p10": 2100,
+    "waste_avoided_p50": 2650,
+    "waste_avoided_p90": 3100,
+    "actual_within_confidence": true,
+    "model_improvement": [
+      { "week": 1, "mape": 18.2 },
+      { "week": 2, "mape": 17.1 },
+      { "week": 3, "mape": 15.8 },
+      { "week": 4, "mape": 14.9 },
+      { "week": 5, "mape": 13.5 },
+      { "week": 6, "mape": 12.8 },
+      { "week": 7, "mape": 11.4 },
+      { "week": 8, "mape": 10.9 },
+      { "week": 9, "mape": 10.1 },
+      { "week": 10, "mape": 9.6 },
+      { "week": 11, "mape": 9.2 },
+      { "week": 12, "mape": 8.7 },
+      { "week": 13, "mape": 8.4 }
+    ],
+    "burlington_note": "DC routing pattern logged. Burlington NC Digital Twin: 47 similar patterns recorded. DC design recommendation updated: second ambient handoff point reduces projected fresh waste by 8.3% across projected 400 stores."
+  }
+}

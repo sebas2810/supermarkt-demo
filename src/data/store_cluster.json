@@ -1,0 +1,67 @@
+[
+  {
+    "id": "AH-0041",
+    "name": "Albert Heijn Almere Stad",
+    "city": "Almere",
+    "address": "Stadshart Almere, Stadhuisplein 2",
+    "format": "XL",
+    "daily_footfall": 8200,
+    "fresh_share_pct": 0.34,
+    "velocity_tier": "high",
+    "dc": "DC-AMS-01",
+    "latitude": 52.3509,
+    "longitude": 5.2647
+  },
+  {
+    "id": "AH-0087",
+    "name": "Albert Heijn Utrecht Leidseweg",
+    "city": "Utrecht",
+    "address": "Leidseweg 28",
+    "format": "Standard",
+    "daily_footfall": 5400,
+    "fresh_share_pct": 0.31,
+    "velocity_tier": "medium",
+    "dc": "DC-AMS-01",
+    "latitude": 52.0907,
+    "longitude": 5.1214
+  },
+  {
+    "id": "AH-0112",
+    "name": "Albert Heijn Amsterdam Bijlmer",
+    "city": "Amsterdam",
+    "address": "Bijlmerplein 888",
+    "format": "Standard",
+    "daily_footfall": 6100,
+    "fresh_share_pct": 0.29,
+    "velocity_tier": "medium",
+    "dc": "DC-AMS-01",
+    "latitude": 52.3120,
+    "longitude": 4.9480
+  },
+  {
+    "id": "AH-0023",
+    "name": "Albert Heijn Haarlem Centrum",
+    "city": "Haarlem",
+    "address": "Grote Houtstraat 70",
+    "format": "Standard",
+    "daily_footfall": 4800,
+    "fresh_share_pct": 0.33,
+    "velocity_tier": "medium",
+    "dc": "DC-AMS-01",
+    "latitude": 52.3813,
+    "longitude": 4.6363
+  },
+  {
+    "id": "AH-0156",
+    "name": "Albert Heijn Amstelveen Stadshart",
+    "city": "Amstelveen",
+    "address": "Binnenhof 4",
+    "format": "XL",
+    "daily_footfall": 7600,
+    "fresh_share_pct": 0.36,
+    "velocity_tier": "high",
+    "dc": "DC-AMS-01",
+    "latitude": 52.3030,
+    "longitude": 4.8570
+  }
+]

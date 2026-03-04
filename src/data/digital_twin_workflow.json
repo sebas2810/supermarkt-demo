@@ -1,0 +1,99 @@
+{
+  "overview": {
+    "total_interventions": 847,
+    "avg_confidence": 0.91,
+    "weeks_active": 13,
+    "simulations_per_intervention": 500,
+    "total_simulations": 423500,
+    "brands_active": 2,
+    "brands_deploying": 1,
+    "brands_planned": 2
+  },
+  "burlington_nc": {
+    "dc_name": "Burlington NC Distribution Center",
+    "dc_id": "DC-BNC-01",
+    "similar_patterns": 47,
+    "current_issue": "Single ambient handoff point creates 4.2h average temperature exceedance window during overnight transit",
+    "proposed_change": "Add second ambient handoff point at receiving dock — reduces temperature exposure from 4.2h to 1.8h average",
+    "projected_stores": 400,
+    "current_waste_rate": 4.1,
+    "projected_waste_rate": 3.76,
+    "waste_reduction_pct": 8.3,
+    "implementation_cost": 2400000,
+    "annual_savings": 8900000,
+    "payback_months": 3.2,
+    "monte_carlo_current": [
+      { "units": 1600, "probability": 2.1 },
+      { "units": 1800, "probability": 8.4 },
+      { "units": 2000, "probability": 22.3 },
+      { "units": 2200, "probability": 45.1 },
+      { "units": 2400, "probability": 68.2 },
+      { "units": 2600, "probability": 85.5 },
+      { "units": 2800, "probability": 92.1 },
+      { "units": 3000, "probability": 78.3 },
+      { "units": 3200, "probability": 52.4 },
+      { "units": 3400, "probability": 28.9 },
+      { "units": 3600, "probability": 12.1 },
+      { "units": 3800, "probability": 4.2 }
+    ],
+    "monte_carlo_improved": [
+      { "units": 800, "probability": 1.8 },
+      { "units": 1000, "probability": 7.2 },
+      { "units": 1200, "probability": 19.8 },
+      { "units": 1400, "probability": 42.1 },
+      { "units": 1600, "probability": 67.3 },
+      { "units": 1800, "probability": 88.4 },
+      { "units": 2000, "probability": 95.2 },
+      { "units": 2200, "probability": 82.1 },
+      { "units": 2400, "probability": 55.8 },
+      { "units": 2600, "probability": 31.2 },
+      { "units": 2800, "probability": 14.5 },
+      { "units": 3000, "probability": 5.1 }
+    ]
+  },
+  "recent_invocations": [
+    { "date": "12 Mar", "incident": "SC-2025-4421-BKT", "brand": "Albert Heijn", "category": "Bakery", "action": "Markdown", "units_saved": 2800, "confidence": 91, "outcome": "Success" },
+    { "date": "11 Mar", "incident": "SC-2025-4398-DHL", "brand": "Delhaize", "category": "Dairy", "action": "Re-route", "units_saved": 1200, "confidence": 87, "outcome": "Success" },
+    { "date": "10 Mar", "incident": "SC-2025-4385-AH", "brand": "Albert Heijn", "category": "Produce", "action": "Markdown", "units_saved": 890, "confidence": 93, "outcome": "Success" },
+    { "date": "9 Mar", "incident": "SC-2025-4371-FL", "brand": "Food Lion", "category": "Bakery", "action": "Markdown", "units_saved": 1540, "confidence": 88, "outcome": "Success" },
+    { "date": "8 Mar", "incident": "SC-2025-4362-AH", "brand": "Albert Heijn", "category": "Meat", "action": "Re-route", "units_saved": 2100, "confidence": 85, "outcome": "Partial" }
+  ],
+  "model_improvement": [
+    { "week": 1, "mape": 18.2, "interventions": 12 },
+    { "week": 2, "mape": 17.1, "interventions": 28 },
+    { "week": 3, "mape": 15.8, "interventions": 45 },
+    { "week": 4, "mape": 14.9, "interventions": 67 },
+    { "week": 5, "mape": 13.5, "interventions": 94 },
+    { "week": 6, "mape": 12.8, "interventions": 128 },
+    { "week": 7, "mape": 11.4, "interventions": 189 },
+    { "week": 8, "mape": 10.9, "interventions": 267 },
+    { "week": 9, "mape": 10.1, "interventions": 358 },
+    { "week": 10, "mape": 9.6, "interventions": 472 },
+    { "week": 11, "mape": 9.2, "interventions": 598 },
+    { "week": 12, "mape": 8.7, "interventions": 721 },
+    { "week": 13, "mape": 8.4, "interventions": 847 }
+  ],
+  "scale_impact": {
+    "kpis_before": {
+      "waste_pct": 4.8,
+      "availability": 94.2,
+      "interventions_per_week": 0,
+      "detection_time_hours": 33
+    },
+    "kpis_after": {
+      "waste_pct": 3.1,
+      "availability": 97.1,
+      "interventions_per_week": 65,
+      "detection_time_hours": 1.4
+    },
+    "annual_value_low": 220000000,
+    "annual_value_high": 340000000,
+    "brands": [
+      { "name": "Albert Heijn", "code": "AH", "country": "Netherlands", "status": "Live", "waste_reduction": 26, "interventions": 412 },
+      { "name": "Food Lion", "code": "FL", "country": "United States", "status": "Live", "waste_reduction": 11, "interventions": 289 },
+      { "name": "Delhaize", "code": "DL", "country": "Belgium", "status": "Deploying", "waste_reduction": 8, "interventions": 146 },
+      { "name": "Hannaford", "code": "HF", "country": "United States", "status": "Planning", "waste_reduction": null, "interventions": 0 },
+      { "name": "Stop & Shop", "code": "SS", "country": "United States", "status": "Planning", "waste_reduction": null, "interventions": 0 }
+    ]
+  }
+}

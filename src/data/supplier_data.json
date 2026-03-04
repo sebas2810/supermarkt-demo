@@ -1,0 +1,34 @@
+{
+  "id": "BKT-NL-0042",
+  "name": "Bakker Bart Zaandam",
+  "legal_name": "Bakker Bart B.V.",
+  "city": "Zaandam",
+  "country": "NL",
+  "contract_ref": "AH-BKT-2024",
+  "product_categories": ["Bakkerij", "Patisserie"],
+  "delivery_schedule": {
+    "frequency": "Daily",
+    "departure_time": "22:00",
+    "arrival_dc": "DC-AMS-01",
+    "expected_arrival": "06:00",
+    "transit_time_hours": 8
+  },
+  "quality_metrics": {
+    "on_time_delivery_pct": 0.94,
+    "quality_incidents_last_90d": 3,
+    "avg_resolution_time_days": 4.2,
+    "temperature_compliance_pct": 0.89
+  },
+  "contact": {
+    "quality_manager": "Jan de Vries",
+    "email": "j.devries@bakkerbartz.nl",
+    "phone": "+31 75 612 3456"
+  },
+  "certifications": ["BRCGS Grade A", "IFS Food 7", "FSSC 22000"],
+  "markdown_clause": {
+    "allows_markdown": true,
+    "max_discount_pct": 0.40,
+    "notification_required": false,
+    "cost_sharing": "none"
+  }
+}

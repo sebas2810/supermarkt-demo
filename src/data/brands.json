@@ -1,0 +1,121 @@
+[
+  {
+    "id": "albert-heijn",
+    "name": "Albert Heijn",
+    "shortName": "AH",
+    "region": "Netherlands",
+    "logoColor": "#00529B",
+    "stores": 1063,
+    "summary": {
+      "activeApps": 4,
+      "agentsRunning": 12,
+      "lastIntervention": "2 min ago",
+      "weeklyWasteSaved": "14,200 units"
+    },
+    "deployedUseCases": [
+      {
+        "useCaseId": "uc-fresh-waste",
+        "status": "healthy",
+        "kpi": { "name": "Waste Reduction", "value": 26, "target": 25, "unit": "%" },
+        "lastAgentAction": "07:38 CET — Markdown executed",
+        "sparkline": [4.2, 4.1, 4.0, 3.9, 3.7, 3.6, 3.5, 3.4, 3.3, 3.2, 3.2, 3.1, 3.1, 3.0]
+      },
+      {
+        "useCaseId": "uc-supplier-risk",
+        "status": "healthy",
+        "kpi": { "name": "Resolution Time", "value": 1.1, "target": 2.0, "unit": "days" },
+        "lastAgentAction": "06:12 CET — Supplier alert resolved",
+        "sparkline": [3.8, 3.5, 3.2, 2.9, 2.6, 2.3, 2.0, 1.8, 1.6, 1.4, 1.3, 1.2, 1.1, 1.1]
+      },
+      {
+        "useCaseId": "uc-demand-sensing",
+        "status": "degraded",
+        "kpi": { "name": "Forecast Accuracy", "value": 82, "target": 90, "unit": "%" },
+        "lastAgentAction": "05:45 CET — Retraining queued",
+        "sparkline": [78, 80, 82, 84, 86, 85, 83, 81, 80, 79, 80, 81, 82, 82]
+      },
+      {
+        "useCaseId": "uc-logistics-routing",
+        "status": "healthy",
+        "kpi": { "name": "Route Efficiency", "value": 94, "target": 90, "unit": "%" },
+        "lastAgentAction": "04:30 CET — Routes optimised",
+        "sparkline": [88, 89, 90, 91, 91, 92, 92, 93, 93, 93, 94, 94, 94, 94]
+      }
+    ]
+  },
+  {
+    "id": "food-lion",
+    "name": "Food Lion",
+    "shortName": "FL",
+    "region": "United States — Southeast",
+    "logoColor": "#E31837",
+    "stores": 1108,
+    "summary": {
+      "activeApps": 2,
+      "agentsRunning": 4,
+      "lastIntervention": "18 min ago",
+      "weeklyWasteSaved": "3,800 units"
+    },
+    "deployedUseCases": [
+      {
+        "useCaseId": "uc-fresh-waste",
+        "status": "degraded",
+        "kpi": { "name": "Waste Reduction", "value": 11, "target": 20, "unit": "%" },
+        "lastAgentAction": "14:22 EST — SLM retraining",
+        "sparkline": [5.1, 5.0, 4.9, 4.8, 4.7, 4.6, 4.5, 4.5, 4.6, 4.5, 4.4, 4.4, 4.3, 4.3]
+      },
+      {
+        "useCaseId": "uc-supplier-risk",
+        "status": "healthy",
+        "kpi": { "name": "Resolution Time", "value": 1.8, "target": 2.0, "unit": "days" },
+        "lastAgentAction": "13:05 EST — Risk score updated",
+        "sparkline": [4.2, 3.9, 3.6, 3.3, 3.0, 2.8, 2.5, 2.3, 2.1, 2.0, 1.9, 1.8, 1.8, 1.8]
+      }
+    ]
+  },
+  {
+    "id": "delhaize",
+    "name": "Delhaize",
+    "shortName": "DL",
+    "region": "Belgium",
+    "logoColor": "#E2001A",
+    "stores": 764,
+    "summary": {
+      "activeApps": 0,
+      "agentsRunning": 0,
+      "lastIntervention": "N/A",
+      "weeklyWasteSaved": "N/A"
+    },
+    "deployedUseCases": []
+  },
+  {
+    "id": "hannaford",
+    "name": "Hannaford",
+    "shortName": "HF",
+    "region": "United States — Northeast",
+    "logoColor": "#00703C",
+    "stores": 189,
+    "summary": {
+      "activeApps": 0,
+      "agentsRunning": 0,
+      "lastIntervention": "N/A",
+      "weeklyWasteSaved": "N/A"
+    },
+    "deployedUseCases": []
+  },
+  {
+    "id": "stop-and-shop",
+    "name": "Stop & Shop",
+    "shortName": "SS",
+    "region": "United States — Northeast",
+    "logoColor": "#D62B1F",
+    "stores": 415,
+    "summary": {
+      "activeApps": 0,
+      "agentsRunning": 0,
+      "lastIntervention": "N/A",
+      "weeklyWasteSaved": "N/A"
+    },
+    "deployedUseCases": []
+  }
+]

@@ -1,0 +1,104 @@
+{
+  "uc-fresh-waste": {
+    "name": "Fresh Waste Prevention",
+    "nodes": [
+      { "id": "iot-sensors", "label": "IoT Sensors", "type": "data", "icon": "Database", "x": 0, "y": 0, "description": "Cold chain temperature, humidity, and GPS data from transit and DC" },
+      { "id": "relex-forecast", "label": "RELEX Forecast", "type": "data", "icon": "Database", "x": 0, "y": 1, "description": "Demand forecast, sell-through prediction, and promotional calendar" },
+      { "id": "risk-scoring", "label": "Risk Scoring", "type": "ml", "icon": "Brain", "x": 1, "y": 0, "description": "ML model scoring 0-10 risk based on cold chain, demand, and shelf life signals" },
+      { "id": "classification", "label": "SLM Classification", "type": "slm", "icon": "Tag", "x": 2, "y": 0, "description": "Small Language Model classifying incident tier (1-3) and routing to appropriate action path" },
+      { "id": "decision-brief", "label": "Decision Brief", "type": "llm", "icon": "MessageSquare", "x": 3, "y": 0, "description": "LLM synthesising all signals into a human-readable decision brief with recommendations" },
+      { "id": "digital-twin", "label": "Digital Twin", "type": "twin", "icon": "Box", "x": 4, "y": 0, "description": "Monte Carlo simulation of intervention scenarios before human decision" },
+      { "id": "human-approval", "label": "Human Approval", "type": "gate", "icon": "UserCheck", "x": 5, "y": 0, "description": "Human-in-the-loop gate for actions exceeding autonomous thresholds", "role": "Category Manager", "escalationCondition": "Units > 500 or Value > \u20AC1,000", "liveStatus": "K. Chu approved \u2014 07:38 CET" },
+      { "id": "execute-action", "label": "Execute Action", "type": "agent", "icon": "Zap", "x": 6, "y": 0, "description": "Autonomous agent executing markdown, reroute, or alert actions across store systems" },
+      { "id": "model-retrain", "label": "Model Retrain", "type": "feedback", "icon": "RefreshCw", "x": 7, "y": 0, "description": "Closed-loop feedback updating risk models with actual outcome data", "feedbackTo": "risk-scoring" }
+    ],
+    "edges": [
+      { "from": "iot-sensors", "to": "risk-scoring" },
+      { "from": "relex-forecast", "to": "risk-scoring" },
+      { "from": "risk-scoring", "to": "classification" },
+      { "from": "classification", "to": "decision-brief", "condition": "tier >= 2" },
+      { "from": "decision-brief", "to": "digital-twin" },
+      { "from": "digital-twin", "to": "human-approval", "condition": "units > 500" },
+      { "from": "human-approval", "to": "execute-action" },
+      { "from": "execute-action", "to": "model-retrain" },
+      { "from": "model-retrain", "to": "risk-scoring", "type": "feedback" }
+    ],
+    "agentLog": [
+      { "time": "06:15", "action": "Cold chain alert received \u2014 Bakker Bart Zaandam transit", "type": "autonomous" },
+      { "time": "06:16", "action": "IoT data ingested: +2.3\u00B0C exceedance for 4.2 hours", "type": "autonomous" },
+      { "time": "06:18", "action": "RELEX forecast variance detected: -23% sell-through", "type": "autonomous" },
+      { "time": "06:22", "action": "Risk model scored: 8.4/10 \u2014 HIGH RISK", "type": "autonomous" },
+      { "time": "06:23", "action": "SLM classified: Tier 3 \u2014 Autonomous action authorised", "type": "autonomous" },
+      { "time": "06:30", "action": "LLM brief generated \u2014 3,400 units at risk across 3 stores", "type": "autonomous" },
+      { "time": "06:31", "action": "Scenario simulation: Markdown \u20AC2.29 \u2192 \u20AC1.49 recommended", "type": "autonomous" },
+      { "time": "06:32", "action": "Digital twin: 2,800 units saved (P50), 91% confidence", "type": "autonomous" },
+      { "time": "07:15", "action": "\u26A0 ESCALATED: Units (3,400) exceed threshold (500)", "type": "escalated" },
+      { "time": "07:15", "action": "Notification sent to K. Chu (Category Manager Fresh)", "type": "escalated" },
+      { "time": "07:38", "action": "\u2713 APPROVED by K. Chu \u2014 executing markdown", "type": "escalated" },
+      { "time": "07:38", "action": "POS system update: AH-0041 Almere Stad \u2014 price \u20AC1.49", "type": "autonomous" },
+      { "time": "07:39", "action": "POS system update: AH-0087 Utrecht \u2014 price \u20AC1.49", "type": "autonomous" },
+      { "time": "07:39", "action": "POS system update: AH-0112 Amsterdam Bijlmer \u2014 price \u20AC1.49", "type": "autonomous" },
+      { "time": "07:40", "action": "ESL labels updated across 3 stores", "type": "autonomous" },
+      { "time": "07:41", "action": "Outcome tracking initiated \u2014 monitoring sell-through", "type": "autonomous" }
+    ],
+    "langgraph": {
+      "stateSchema": [
+        { "field": "incident_id", "type": "str", "description": "Unique incident identifier" },
+        { "field": "iot_data", "type": "ColdChainReading", "description": "Temperature + humidity readings from IoT sensors" },
+        { "field": "forecast_data", "type": "ForecastPayload", "description": "RELEX demand forecast + sell-through prediction" },
+        { "field": "risk_score", "type": "float", "description": "ML risk score (0-10)" },
+        { "field": "tier", "type": "int", "description": "SLM classification tier (1-3)" },
+        { "field": "brief", "type": "str | None", "description": "LLM-generated decision brief" },
+        { "field": "scenarios", "type": "list[Scenario]", "description": "Simulated intervention scenarios from Digital Twin" },
+        { "field": "selected_action", "type": "Action | None", "description": "Approved or auto-selected action to execute" },
+        { "field": "approval", "type": "ApprovalStatus", "description": "Human approval status (pending/approved/rejected)" },
+        { "field": "execution_result", "type": "ExecutionResult | None", "description": "Result from action execution" },
+        { "field": "outcome", "type": "Outcome | None", "description": "Actual vs predicted outcome for feedback" }
+      ],
+      "tools": [
+        { "name": "query_iot_platform", "description": "Fetch cold chain sensor data from IoT platform", "returns": "ColdChainReading" },
+        { "name": "query_relex_api", "description": "Fetch demand forecast from RELEX", "returns": "ForecastPayload" },
+        { "name": "run_risk_model", "description": "Score incident risk (0-10) using XGBoost ensemble", "returns": "float" },
+        { "name": "classify_tier", "description": "SLM classifies incident into Tier 1-3", "returns": "int" },
+        { "name": "generate_brief", "description": "LLM generates decision brief from all signals", "returns": "str" },
+        { "name": "run_digital_twin", "description": "Monte Carlo simulation of intervention scenarios", "returns": "list[Scenario]" },
+        { "name": "request_approval", "description": "Send approval request to Category Manager", "returns": "ApprovalStatus" },
+        { "name": "execute_pos_update", "description": "Push price changes to POS systems", "returns": "ExecutionResult" },
+        { "name": "update_esl_labels", "description": "Update Electronic Shelf Labels", "returns": "bool" },
+        { "name": "log_outcome", "description": "Record outcome for model retraining", "returns": "Outcome" }
+      ],
+      "code": "from langgraph.graph import StateGraph, END\nfrom langgraph.checkpoint import MemorySaver\n\nclass FreshWasteState(TypedDict):\n    incident_id: str\n    iot_data: ColdChainReading | None\n    forecast_data: ForecastPayload | None\n    risk_score: float\n    tier: int\n    brief: str | None\n    scenarios: list[Scenario]\n    selected_action: Action | None\n    approval: ApprovalStatus\n    execution_result: ExecutionResult | None\n    outcome: Outcome | None\n\ndef route_by_tier(state: FreshWasteState):\n    if state[\"tier\"] == 1:\n        return \"execute_action\"  # Auto-execute\n    return \"generate_brief\"      # Needs review\n\ndef check_threshold(state: FreshWasteState):\n    action = state[\"selected_action\"]\n    if action.units > 500 or action.value > 1000:\n        return \"human_approval\"  # Escalate\n    return \"execute_action\"      # Auto-approve\n\n# Build graph\ngraph = StateGraph(FreshWasteState)\n\n# Add nodes\ngraph.add_node(\"ingest_iot\", ingest_iot_data)\ngraph.add_node(\"ingest_forecast\", ingest_forecast)\ngraph.add_node(\"score_risk\", score_risk)\ngraph.add_node(\"classify_tier\", classify_tier)\ngraph.add_node(\"generate_brief\", generate_brief)\ngraph.add_node(\"simulate_scenarios\", run_digital_twin)\ngraph.add_node(\"human_approval\", request_human_approval)\ngraph.add_node(\"execute_action\", execute_action)\ngraph.add_node(\"record_outcome\", record_outcome)\n\n# Add edges\ngraph.set_entry_point(\"ingest_iot\")\ngraph.add_edge(\"ingest_iot\", \"score_risk\")\ngraph.add_edge(\"ingest_forecast\", \"score_risk\")\ngraph.add_edge(\"score_risk\", \"classify_tier\")\ngraph.add_conditional_edges(\n    \"classify_tier\",\n    route_by_tier,\n    {\"generate_brief\": \"generate_brief\",\n     \"execute_action\": \"execute_action\"}\n)\ngraph.add_edge(\"generate_brief\", \"simulate_scenarios\")\ngraph.add_conditional_edges(\n    \"simulate_scenarios\",\n    check_threshold,\n    {\"human_approval\": \"human_approval\",\n     \"execute_action\": \"execute_action\"}\n)\ngraph.add_edge(\"human_approval\", \"execute_action\")\ngraph.add_edge(\"execute_action\", \"record_outcome\")\ngraph.add_edge(\"record_outcome\", END)\n\n# Compile with checkpointing\napp = graph.compile(\n    checkpointer=MemorySaver(),\n    interrupt_before=[\"human_approval\"]\n)"
+    },
+    "genai_deliberation": [
+      {
+        "role": "system",
+        "content": "Incident SC-2025-0312 detected. Analysing cold chain breach and demand deviation..."
+      },
+      {
+        "role": "assistant",
+        "content": "I've analysed the incident data. Here's what I'm seeing:\n\n**Cold Chain Breach:** Temperature exceedance of +2.3\u00B0C sustained for 4.2 hours during overnight transit from Bakker Bart Zaandam. This reduces estimated shelf life by ~18 hours.\n\n**Demand Signal:** Sell-through is running 23% below RELEX forecast since Monday, consistent with Jumbo's competing Tuesday promotion on similar bakery items.\n\n**At-Risk Inventory:** 3,400 units of AH Bakery Ref 4421 (seeded sourdough, 400g) across 3 stores, with Thursday 14:00 as the effective expiry window.\n\nLet me run scenarios to compare intervention options..."
+      },
+      {
+        "role": "assistant",
+        "content": "I've simulated 500 Monte Carlo scenarios across three strategies:\n\n**Scenario A: Markdown to \u20AC1.49** (from \u20AC2.29)\n\u2022 Waste avoided: 2,800 units (82%) \u2022 Revenue: \u20AC4,172 \u2022 Net benefit: \u20AC3,932\nConfidence: 91% based on 847 historical interventions\n\n**Scenario B: DC Re-Route** to high-velocity Amsterdam stores\n\u2022 Waste avoided: 1,900 units (56%) \u2022 Revenue: \u20AC4,351 \u2022 Net benefit: \u20AC3,461\nHigher revenue per unit but lower volume reach\n\n**Scenario C: No Action**\n\u2022 Waste: 2,950 units \u2022 Revenue loss: \u20AC6,755\n\nI recommend **Scenario A (Markdown)** \u2014 it saves the most units and has the highest confidence from historical data. The markdown timing window is before 11:00 Thursday to maximise sell-through.",
+        "scenarios": true
+      },
+      {
+        "role": "user",
+        "content": "What about combining A and B? Can we markdown the bulk and reroute the remainder?"
+      },
+      {
+        "role": "assistant",
+        "content": "Great question. Let me simulate a hybrid approach:\n\n**Scenario D: Markdown + Partial Re-Route**\n\u2022 Markdown 2,800 units across Almere, Utrecht, Bijlmer at \u20AC1.49\n\u2022 Re-route 600 remaining units to AH Amsterdam Centraal (highest velocity)\n\u2022 Waste avoided: 3,150 units (93%) \u2022 Combined revenue: \u20AC4,890 \u2022 Net: \u20AC4,410\n\nThe hybrid outperforms both individual scenarios. However, the re-route adds \u20AC340 in logistics cost and requires dispatch before 09:00 Thursday.\n\n**Trade-off:** +\u20AC478 net benefit vs Scenario A alone, but introduces execution complexity. Given the volume exceeds 500 units, this will require your approval either way.\n\nShall I prepare this as the recommended action for approval?"
+      },
+      {
+        "role": "user",
+        "content": "Yes, go with the hybrid. Prepare it for my approval."
+      },
+      {
+        "role": "assistant",
+        "content": "\u2713 Hybrid scenario prepared for approval.\n\nAction summary sent to your dashboard:\n\u2022 Markdown: 2,800 units \u2192 \u20AC1.49 (3 stores, before 11:00 Thu)\n\u2022 Re-route: 600 units \u2192 AH Amsterdam Centraal (before 09:00 Thu)\n\u2022 Expected outcome: 3,150 units saved, \u20AC4,890 revenue recovered\n\nAwaiting your approval in the governance panel."
+      }
+    ]
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "kpis": [
+    {
+      "name": "Fresh Waste %",
+      "before": 4.2,
+      "after": 3.1,
+      "unit": "%",
+      "change": -26,
+      "change_label": "−26%",
+      "direction": "down"
+    },
+    {
+      "name": "On-shelf Availability",
+      "before": 94.3,
+      "after": 97.1,
+      "unit": "%",
+      "change": 2.8,
+      "change_label": "+2.8pp",
+      "direction": "up"
+    },
+    {
+      "name": "Buyer Hours on Exceptions",
+      "before": 18,
+      "after": 5,
+      "unit": "h/week",
+      "change": -72,
+      "change_label": "−72%",
+      "direction": "down"
+    },
+    {
+      "name": "Markdown Yield",
+      "before": 0.82,
+      "after": 1.14,
+      "unit": "€/unit",
+      "change": 39,
+      "change_label": "+39%",
+      "direction": "up"
+    },
+    {
+      "name": "Supplier Resolution Time",
+      "before": 4.2,
+      "after": 1.1,
+      "unit": "days",
+      "change": -74,
+      "change_label": "−74%",
+      "direction": "down"
+    },
+    {
+      "name": "CO₂ Saved",
+      "before": 0,
+      "after": 47,
+      "unit": "tonnes/qtr",
+      "change": 100,
+      "change_label": "New",
+      "direction": "up"
+    }
+  ],
+  "waste_trend": [
+    { "week": "W1", "waste_pct": 4.2 },
+    { "week": "W2", "waste_pct": 4.1 },
+    { "week": "W3", "waste_pct": 4.0 },
+    { "week": "W4", "waste_pct": 3.9 },
+    { "week": "W5", "waste_pct": 3.7 },
+    { "week": "W6", "waste_pct": 3.6 },
+    { "week": "W7", "waste_pct": 3.5 },
+    { "week": "W8", "waste_pct": 3.4 },
+    { "week": "W9", "waste_pct": 3.3 },
+    { "week": "W10", "waste_pct": 3.2 },
+    { "week": "W11", "waste_pct": 3.2 },
+    { "week": "W12", "waste_pct": 3.1 },
+    { "week": "W13", "waste_pct": 3.1 }
+  ],
+  "group_projection": {
+    "annual_value_low": 220,
+    "annual_value_high": 340,
+    "unit": "M€",
+    "brands": 16,
+    "label": "At group scale across all 16 brands: €220–340M annual value. Direct contribution to Save for Our Customers programme."
+  }
+}
