@@ -2,11 +2,84 @@ import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
 /**
- * Pre-process Claude's response text to fix common markdown issues:
- * - Ensure literal \n are actual newlines
- * - Fix table rows that got joined on one line
- * - Clean up double-bullet markers (* •)
- * - Ensure blank lines around block elements
+ * Fix markdown tables where multiple rows got joined on a single line.
+ * Uses the header row (first | line with text content) to determine column count,
+ * then splits any line with too many pipes into proper rows.
+ */
+function fixMarkdownTables(text) {
+  const lines = text.split('\n')
+
+  // Step 1: Find the header row to determine column count.
+  // The header row is the first pipe-delimited line that contains text (not just dashes/colons).
+  let pipesPerRow = 0
+  for (const line of lines) {
+    const trimmed = line.trim()
+    if (!trimmed.startsWith('|') || !trimmed.endsWith('|')) continue
+    // Skip separator rows (only |, -, :, spaces)
+    if (/^\|[\s:-]+(\|[\s:-]+)*\|$/.test(trimmed)) continue
+    // This is a content row — count its pipes
+    const count = (trimmed.match(/\|/g) || []).length
+    if (count >= 3) { // at least 2 columns
+      pipesPerRow = count
+      break
+    }
+  }
+
+  // If no clean header found, try the shortest pipe-starting line as reference
+  if (pipesPerRow === 0) {
+    let minPipes = Infinity
+    for (const line of lines) {
+      const trimmed = line.trim()
+      if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+        const count = (trimmed.match(/\|/g) || []).length
+        if (count >= 3 && count < minPipes) minPipes = count
+      }
+    }
+    if (minPipes < Infinity) pipesPerRow = minPipes
+  }
+
+  if (pipesPerRow < 3) return text // not a table
+
+  // Step 2: Split lines that have too many pipes (multiple rows joined)
+  const result = []
+  for (const line of lines) {
+    const trimmed = line.trim()
+
+    if (!trimmed.startsWith('|')) {
+      result.push(line)
+      continue
+    }
+
+    const pipeCount = (trimmed.match(/\|/g) || []).length
+
+    if (pipeCount <= pipesPerRow) {
+      result.push(trimmed)
+      continue
+    }
+
+    // Multiple rows joined — split by finding every pipesPerRow-th pipe
+    const pipePositions = []
+    for (let i = 0; i < trimmed.length; i++) {
+      if (trimmed[i] === '|') pipePositions.push(i)
+    }
+
+    for (let start = 0; start < pipePositions.length; start += pipesPerRow) {
+      const endIdx = start + pipesPerRow - 1
+      if (endIdx < pipePositions.length) {
+        result.push(trimmed.substring(pipePositions[start], pipePositions[endIdx] + 1).trim())
+      } else {
+        // Leftover — append to previous row or keep as-is
+        const leftover = trimmed.substring(pipePositions[start]).trim()
+        if (leftover.length > 1) result.push(leftover)
+      }
+    }
+  }
+
+  return result.join('\n')
+}
+
+/**
+ * Pre-process Claude's response text to fix common markdown issues.
  */
 function preprocessMarkdown(text) {
   if (!text) return ''
@@ -16,22 +89,20 @@ function preprocessMarkdown(text) {
   // 1. Convert any literal \n that survived JSON parsing
   out = out.replace(/\\n/g, '\n')
 
-  // 2. Fix tables: if pipe-delimited rows are on a single line, split them.
-  //    Pattern: "| ... | | ... |" → separate rows on newlines
-  //    Detect: a closing "| " immediately followed by "| " (row boundary)
-  out = out.replace(/\|\s*\|\s*(?=[A-Za-z0-9#\-])/g, '|\n| ')
+  // 2. Fix tables with joined rows using column-count approach
+  out = fixMarkdownTables(out)
 
-  // 3. Fix header separator row that got joined: "| |---" → newline before separator
-  out = out.replace(/\|\s*\|(\s*[-:]+)/g, '|\n|$1')
-
-  // 4. Clean up double-bullet markers: "* •" or "- •" → just "- "
+  // 3. Clean up double-bullet markers: "* •" or "- •" → just "- "
   out = out.replace(/[*-]\s*•\s*/g, '- ')
 
-  // 5. Ensure headings have a blank line before them (unless at start)
+  // 4. Ensure headings have a blank line before them (unless at start)
   out = out.replace(/([^\n])\n(#{1,4}\s)/g, '$1\n\n$2')
 
-  // 6. Ensure table has blank line before it
-  out = out.replace(/([^\n])\n(\|[^\n]*\|)/g, '$1\n\n$2')
+  // 5. Ensure blank line before first table row (required by GFM)
+  out = out.replace(/([^\n|])\n(\|[^\n]*\|)/g, '$1\n\n$2')
+
+  // 6. Ensure blank line after last table row before non-table content
+  out = out.replace(/(\|[^\n]*\|)\n([^\n|#\-\s])/g, '$1\n\n$2')
 
   return out.trim()
 }
