@@ -3,6 +3,7 @@ import brands from '../data/brands.json'
 import StatusBadge from '../components/shared/StatusBadge'
 import LayerIndicator from '../components/shared/LayerIndicator'
 import { ExecutionModelBadge } from './AgentFlowView'
+import BrandLogo from '../components/shared/BrandLogo'
 import { useState } from 'react'
 
 export default function UseCaseDrawer({ useCase, onClose, navigateTo }) {
@@ -110,12 +111,7 @@ export default function UseCaseDrawer({ useCase, onClose, navigateTo }) {
                 {deployedBrands.map(brand => (
                   <div key={brand.id} className="flex items-center justify-between bg-navy/50 rounded-lg px-3 py-2">
                     <div className="flex items-center gap-2">
-                      <div
-                        className="w-6 h-6 rounded flex items-center justify-center text-[9px] font-bold text-white"
-                        style={{ backgroundColor: brand.logoColor }}
-                      >
-                        {brand.shortName}
-                      </div>
+                      <BrandLogo brand={brand} size="md" />
                       <div>
                         <span className="text-xs text-white">{brand.name}</span>
                         <span className="text-[9px] text-gray-500 ml-2">{brand.region}</span>
@@ -142,12 +138,7 @@ export default function UseCaseDrawer({ useCase, onClose, navigateTo }) {
                     key={brand.id}
                     className="flex items-center gap-1.5 bg-navy/50 rounded-lg px-2.5 py-1.5 border border-navy-mid"
                   >
-                    <div
-                      className="w-5 h-5 rounded flex items-center justify-center text-[8px] font-bold text-white"
-                      style={{ backgroundColor: brand.logoColor }}
-                    >
-                      {brand.shortName}
-                    </div>
+                    <BrandLogo brand={brand} size="sm" />
                     <span className="text-[10px] text-gray-400">{brand.name}</span>
                   </div>
                 ))}

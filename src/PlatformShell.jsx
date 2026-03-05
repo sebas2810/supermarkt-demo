@@ -3,6 +3,7 @@ import {
   LayoutDashboard, Grid3X3, Settings, ChevronLeft, ChevronRight,
 } from 'lucide-react'
 import brands from './data/brands.json'
+import BrandLogo from './components/shared/BrandLogo'
 import Breadcrumb from './components/shared/Breadcrumb'
 import { WorkflowProvider } from './context/WorkflowContext'
 import WorkflowView from './views/WorkflowView'
@@ -13,10 +14,11 @@ import GenerativeKPIDashboard from './views/GenerativeKPIDashboard'
 
 function CapgeminiLogo({ className = '' }) {
   return (
-    <svg viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <path d="M14 4C14 4 6 10 6 18C6 22.4 9.6 26 14 26C14.8 26 15.6 25.9 16.3 25.6L14 32H18L15.7 25.6C16.4 25.9 17.2 26 18 26C22.4 26 26 22.4 26 18C26 10 18 4 18 4C18 4 17 7 16 7C15 7 14 4 14 4Z" fill="#1DB8F2"/>
-      <text x="34" y="26" fontFamily="Ubuntu, Verdana, sans-serif" fontSize="18" fontWeight="400" fill="white">Capgemini</text>
-    </svg>
+    <img
+      src="https://cdn.brandfetch.io/capgemini.com"
+      alt="Capgemini"
+      className={`object-contain ${className}`}
+    />
   )
 }
 
@@ -99,11 +101,11 @@ export default function PlatformShell() {
         <div className="flex-none h-12 flex items-center px-3 border-b border-navy-mid/30">
           {!sidebarCollapsed && <CapgeminiLogo className="h-5 w-auto" />}
           {sidebarCollapsed && (
-            <div className="w-8 h-8 rounded bg-cap-cyan/10 flex items-center justify-center">
-              <svg viewBox="0 0 32 32" className="w-5 h-5" fill="none">
-                <path d="M14 4C14 4 6 10 6 18C6 22.4 9.6 26 14 26C14.8 26 15.6 25.9 16.3 25.6L14 32H18L15.7 25.6C16.4 25.9 17.2 26 18 26C22.4 26 26 22.4 26 18C26 10 18 4 18 4C18 4 17 7 16 7C15 7 14 4 14 4Z" fill="#1DB8F2"/>
-              </svg>
-            </div>
+            <img
+              src="https://cdn.brandfetch.io/capgemini.com"
+              alt="Capgemini"
+              className="w-8 h-8 rounded object-contain"
+            />
           )}
         </div>
 
@@ -151,12 +153,7 @@ export default function PlatformShell() {
                 }`}
                 title={sidebarCollapsed ? brand.name : undefined}
               >
-                <div
-                  className="w-6 h-6 rounded flex items-center justify-center text-[9px] font-bold text-white flex-none"
-                  style={{ backgroundColor: brand.logoColor }}
-                >
-                  {brand.shortName}
-                </div>
+                <BrandLogo brand={brand} size="md" />
                 {!sidebarCollapsed && (
                   <div className="flex-1 text-left min-w-0">
                     <span className="block truncate">{brand.name}</span>

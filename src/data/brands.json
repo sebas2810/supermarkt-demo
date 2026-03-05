@@ -5,6 +5,7 @@
     "shortName": "AH",
     "region": "Netherlands",
     "logoColor": "#00529B",
+    "logoUrl": "https://cdn.brandfetch.io/ah.nl",
     "stores": 1063,
     "summary": {
       "activeApps": 4,
@@ -49,6 +50,7 @@
     "shortName": "FL",
     "region": "United States — Southeast",
     "logoColor": "#E31837",
+    "logoUrl": "https://cdn.brandfetch.io/foodlion.com",
     "stores": 1108,
     "summary": {
       "activeApps": 2,
@@ -79,6 +81,7 @@
     "shortName": "DL",
     "region": "Belgium",
     "logoColor": "#E2001A",
+    "logoUrl": "https://cdn.brandfetch.io/delhaize.be",
     "stores": 764,
     "summary": {
       "activeApps": 0,
@@ -94,6 +97,7 @@
     "shortName": "HF",
     "region": "United States — Northeast",
     "logoColor": "#00703C",
+    "logoUrl": "https://cdn.brandfetch.io/hannaford.com",
     "stores": 189,
     "summary": {
       "activeApps": 0,
@@ -109,6 +113,7 @@
     "shortName": "SS",
     "region": "United States — Northeast",
     "logoColor": "#D62B1F",
+    "logoUrl": "https://cdn.brandfetch.io/stopandshop.com",
     "stores": 415,
     "summary": {
       "activeApps": 0,

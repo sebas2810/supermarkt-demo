@@ -5,6 +5,8 @@ import { ThinkingDots } from '../components/shared/TypewriterText'
 import { useWorkflowSafe } from '../context/WorkflowContext'
 import brands from '../data/brands.json'
 import useCases from '../data/use_cases.json'
+import BrandLogo from '../components/shared/BrandLogo'
+import RichMessage from '../components/shared/RichMessage'
 
 const TREND_ICONS = {
   up: TrendingUp,
@@ -24,8 +26,9 @@ export default function GenerativeKPIDashboard({ navigateTo }) {
   const [isFallback, setIsFallback] = useState(false)
   const [query, setQuery] = useState('')
   const [queryLoading, setQueryLoading] = useState(false)
-  const [responses, setResponses] = useState([])
+  const [messages, setMessages] = useState([])
   const queryRef = useRef(null)
+  const chatEndRef = useRef(null)
 
   // Read workflow completion state from context
   const { workflowCompleted } = useWorkflowSafe()
@@ -50,25 +53,38 @@ export default function GenerativeKPIDashboard({ navigateTo }) {
     return () => { cancelled = true }
   }, [])
 
+  const formatTime = (date) => date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+
   const handleQuery = async () => {
     if (!query.trim() || queryLoading) return
     const q = query.trim()
+    const now = new Date()
     setQuery('')
+
+    // Add user message
+    setMessages(prev => [...prev, { role: 'user', text: q, time: now }])
     setQueryLoading(true)
 
     const result = await queryDashboard(q)
+    const aiTime = new Date()
     setQueryLoading(false)
 
     if (result) {
-      setResponses(prev => [{ question: q, ...result }, ...prev])
+      setMessages(prev => [...prev, { role: 'ai', text: result.answer, metrics: result.relatedMetrics, time: aiTime }])
     } else {
-      setResponses(prev => [{
-        question: q,
-        answer: "I'm unable to connect to the Claude API right now. This is a demo — in production, I'd analyse the operational data and provide a data-driven answer.",
-        relatedMetrics: [],
-      }, ...prev])
+      setMessages(prev => [...prev, {
+        role: 'ai',
+        text: "I'm unable to connect to the Claude API right now. This is a demo — in production, I'd analyse the operational data and provide a data-driven answer.",
+        metrics: [],
+        time: aiTime,
+      }])
     }
   }
+
+  // Auto-scroll chat to bottom
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, queryLoading])
 
   if (loading) {
     return (
@@ -160,12 +176,7 @@ export default function GenerativeKPIDashboard({ navigateTo }) {
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       {brandData && (
-                        <div
-                          className="w-6 h-6 rounded flex items-center justify-center text-[9px] font-bold text-white"
-                          style={{ backgroundColor: brandData.logoColor }}
-                        >
-                          {brandData.shortName}
-                        </div>
+                        <BrandLogo brand={brandData} size="md" />
                       )}
                       <span className="text-xs font-semibold text-white">{brand.brand}</span>
                     </div>
@@ -233,35 +244,73 @@ export default function GenerativeKPIDashboard({ navigateTo }) {
           </div>
         )}
 
-        {/* Query responses */}
-        {responses.map((resp, i) => (
-          <div key={i} className="animate-slide-in">
-            <div className="bg-navy-light rounded-xl border border-cap-cyan/20 p-4">
-              <p className="text-[10px] text-cap-cyan mb-2">Q: {resp.question}</p>
-              <p className="text-xs text-gray-200 leading-relaxed mb-2">{resp.answer}</p>
-              {resp.relatedMetrics?.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {resp.relatedMetrics.map((m, j) => (
-                    <div key={j} className="bg-navy/50 rounded-lg px-2.5 py-1">
-                      <span className="text-[9px] text-gray-500">{m.name}</span>
-                      <span className="text-[11px] text-white font-bold ml-1.5">{m.value}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
+        {/* Chat messages */}
+        {messages.map((msg, i) => (
+          <div key={i} className={`flex gap-2.5 animate-slide-in ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+            {/* AI avatar */}
+            {msg.role === 'ai' && (
+              <div className="flex-none w-7 h-7 rounded-full bg-cap-cyan/10 border border-cap-cyan/30 flex items-center justify-center mt-0.5">
+                <Sparkles className="w-3.5 h-3.5 text-cap-cyan" />
+              </div>
+            )}
+
+            <div className={`max-w-[75%] ${msg.role === 'user' ? 'items-end' : 'items-start'} flex flex-col`}>
+              {/* Bubble */}
+              <div className={`px-3.5 py-2.5 ${
+                msg.role === 'user'
+                  ? 'bg-cap-cyan/15 border border-cap-cyan/25 rounded-xl rounded-br-sm'
+                  : 'bg-navy-light border border-navy-mid rounded-xl rounded-bl-sm'
+              }`}>
+                {msg.role === 'user'
+                  ? <p className="text-xs leading-relaxed text-white">{msg.text}</p>
+                  : <RichMessage text={msg.text} />
+                }
+                {msg.metrics?.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 mt-2 pt-2 border-t border-navy-mid/50">
+                    {msg.metrics.map((m, j) => (
+                      <div key={j} className="bg-navy/60 rounded-md px-2 py-0.5">
+                        <span className="text-[9px] text-gray-500">{m.name}</span>
+                        <span className="text-[10px] text-white font-bold ml-1">{m.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+              {/* Timestamp */}
+              <span className={`text-[9px] text-gray-600 mt-1 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
+                {msg.role === 'ai' ? 'Claude · ' : ''}{formatTime(msg.time)}
+              </span>
             </div>
+
+            {/* User avatar */}
+            {msg.role === 'user' && (
+              <div className="flex-none w-7 h-7 rounded-full bg-cap-blue flex items-center justify-center text-[9px] font-bold text-white mt-0.5">
+                KC
+              </div>
+            )}
           </div>
         ))}
+
+        {/* Thinking indicator */}
+        {queryLoading && (
+          <div className="flex gap-2.5 justify-start animate-slide-in">
+            <div className="flex-none w-7 h-7 rounded-full bg-cap-cyan/10 border border-cap-cyan/30 flex items-center justify-center mt-0.5">
+              <Sparkles className="w-3.5 h-3.5 text-cap-cyan" />
+            </div>
+            <div className="bg-navy-light border border-navy-mid rounded-xl rounded-bl-sm px-4 py-3">
+              <div className="flex items-center gap-2">
+                <ThinkingDots />
+                <span className="text-[11px] text-gray-400">Analysing...</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        <div ref={chatEndRef} />
       </div>
 
       {/* Query bar — pinned bottom */}
       <div className="flex-none border-t border-navy-mid/30 bg-navy-light px-5 py-3">
-        {queryLoading && (
-          <div className="flex items-center gap-2 mb-2 text-xs text-cap-cyan">
-            <ThinkingDots />
-            <span>Analysing...</span>
-          </div>
-        )}
         <div className="flex items-center gap-2">
           <div className="flex-1 relative">
             <input

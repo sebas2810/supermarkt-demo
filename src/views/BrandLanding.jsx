@@ -2,6 +2,7 @@ import { Activity, Bot, Clock, Package } from 'lucide-react'
 import brands from '../data/brands.json'
 import useCases from '../data/use_cases.json'
 import StatusBadge from '../components/shared/StatusBadge'
+import BrandLogo from '../components/shared/BrandLogo'
 import Sparkline from '../components/shared/Sparkline'
 
 function MetricCard({ icon: Icon, label, value, iconColor }) {
@@ -33,12 +34,7 @@ export default function BrandLanding({ brandId, navigateTo }) {
     <div className="h-full overflow-auto p-5">
       {/* Brand header */}
       <div className="flex items-center gap-4 mb-5">
-        <div
-          className="w-14 h-14 rounded-xl flex items-center justify-center text-xl font-bold text-white"
-          style={{ backgroundColor: brand.logoColor }}
-        >
-          {brand.shortName}
-        </div>
+        <BrandLogo brand={brand} size="lg" />
         <div>
           <h2 className="text-xl font-semibold text-white">{brand.name}</h2>
           <p className="text-xs text-gray-400">{brand.region} · {brand.stores.toLocaleString()} stores</p>

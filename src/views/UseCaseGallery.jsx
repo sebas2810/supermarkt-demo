@@ -5,6 +5,7 @@ import StatusBadge from '../components/shared/StatusBadge'
 import LayerIndicator from '../components/shared/LayerIndicator'
 import { ExecutionModelBadge } from './AgentFlowView'
 import UseCaseDrawer from './UseCaseDrawer'
+import BrandLogo from '../components/shared/BrandLogo'
 
 const DOMAINS = ['All', 'Fresh', 'Demand', 'Logistics', 'Commercial']
 
@@ -110,14 +111,12 @@ export default function UseCaseGallery({ navigateTo }) {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1">
                     {deployedBrands.slice(0, 3).map(brand => (
-                      <div
+                      <BrandLogo
                         key={brand.id}
-                        className={`w-5 h-5 rounded flex items-center justify-center text-[7px] font-bold text-white ${!isInteractive ? 'opacity-50' : ''}`}
-                        style={{ backgroundColor: brand.logoColor }}
-                        title={brand.name}
-                      >
-                        {brand.shortName}
-                      </div>
+                        brand={brand}
+                        size="sm"
+                        className={!isInteractive ? 'opacity-50' : ''}
+                      />
                     ))}
                     {deployedBrands.length === 0 && (
                       <span className="text-[9px] text-gray-600">No deployments</span>

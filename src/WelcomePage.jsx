@@ -358,11 +358,11 @@ export default function WelcomePage({ onEnter }) {
           {/* Capgemini × Ahold Delhaize dual branding */}
           <motion.div variants={fadeInUp} custom={0} className="flex justify-center items-center gap-6 mb-8">
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-cap-cyan to-cap-blue flex items-center justify-center shadow-lg shadow-cap-cyan/20">
-                <svg viewBox="0 0 32 32" className="w-5 h-5" fill="none">
-                  <path d="M14 4C14 4 6 10 6 18C6 22.4 9.6 26 14 26C14.8 26 15.6 25.9 16.3 25.6L14 32H18L15.7 25.6C16.4 25.9 17.2 26 18 26C22.4 26 26 22.4 26 18C26 10 18 4 18 4C18 4 17 7 16 7C15 7 14 4 14 4Z" fill="white"/>
-                </svg>
-              </div>
+              <img
+                src="https://cdn.brandfetch.io/capgemini.com"
+                alt="Capgemini"
+                className="w-9 h-9 rounded-lg object-contain shadow-lg shadow-cap-cyan/20"
+              />
               <div className="text-left">
                 <span className="text-sm font-semibold text-white tracking-wide block leading-tight">Capgemini</span>
                 <span className="text-[9px] text-cap-cyan/70 tracking-wide">Enterprise AI at Scale</span>
@@ -370,9 +370,11 @@ export default function WelcomePage({ onEnter }) {
             </div>
             <div className="h-8 w-px bg-navy-mid" />
             <div className="flex items-center gap-2.5">
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-ah-blue to-[#003d73] flex items-center justify-center shadow-lg shadow-ah-blue/20">
-                <span className="text-white font-bold text-[10px] tracking-tight">AH</span>
-              </div>
+              <img
+                src="https://cdn.brandfetch.io/aholddelhaize.com"
+                alt="Ahold Delhaize"
+                className="w-9 h-9 rounded-lg object-contain shadow-lg shadow-ah-blue/20"
+              />
               <div className="text-left">
                 <span className="text-sm font-semibold text-white tracking-wide block leading-tight">Ahold Delhaize</span>
                 <span className="text-[9px] text-ah-blue/70 tracking-wide">Global Retail Leader</span>

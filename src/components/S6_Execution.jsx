@@ -16,7 +16,6 @@ export default function S6_Execution({ workflowState, onAction }) {
         clearInterval(interval)
         setTimeout(() => {
           setShowSummary(true)
-          onAction?.('executionComplete')
         }, 500)
         return
       }
@@ -81,21 +80,29 @@ export default function S6_Execution({ workflowState, onAction }) {
 
           {showSummary && (
             <div className="flex-none mt-2 bg-risk-green/5 border border-risk-green/20 rounded-lg p-2.5 animate-slide-in">
-              <div className="flex items-center gap-6">
-                <div className="text-center">
-                  <span className="text-lg font-bold text-risk-green">12s</span>
-                  <p className="text-[10px] text-gray-400">Total time</p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-6">
+                  <div className="text-center">
+                    <span className="text-lg font-bold text-risk-green">12s</span>
+                    <p className="text-[10px] text-gray-400">Total time</p>
+                  </div>
+                  <div className="h-6 w-px bg-navy-mid" />
+                  <div className="text-center">
+                    <span className="text-lg font-bold text-white">{ACTIONS.length}</span>
+                    <p className="text-[10px] text-gray-400">Actions</p>
+                  </div>
+                  <div className="h-6 w-px bg-navy-mid" />
+                  <div className="text-center">
+                    <span className="text-lg font-bold text-cap-cyan">{incident.predictions.waste_avoided.toLocaleString()}</span>
+                    <p className="text-[10px] text-gray-400">Units saved</p>
+                  </div>
                 </div>
-                <div className="h-6 w-px bg-navy-mid" />
-                <div className="text-center">
-                  <span className="text-lg font-bold text-white">{ACTIONS.length}</span>
-                  <p className="text-[10px] text-gray-400">Actions</p>
-                </div>
-                <div className="h-6 w-px bg-navy-mid" />
-                <div className="text-center">
-                  <span className="text-lg font-bold text-cap-cyan">{incident.predictions.waste_avoided.toLocaleString()}</span>
-                  <p className="text-[10px] text-gray-400">Units saved</p>
-                </div>
+                <button
+                  onClick={() => onAction?.('executionComplete')}
+                  className="flex-none px-5 py-2.5 bg-cap-cyan text-navy font-semibold text-xs rounded-lg hover:bg-cap-cyan/80 transition-colors"
+                >
+                  View Results {'\u2192'}
+                </button>
               </div>
             </div>
           )}

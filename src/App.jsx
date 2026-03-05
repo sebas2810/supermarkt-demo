@@ -44,10 +44,11 @@ function getWorkflowConfig(workflowId) {
 
 function CapgeminiLogo({ className = '' }) {
   return (
-    <svg viewBox="0 0 180 36" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-      <path d="M14 4C14 4 6 10 6 18C6 22.4 9.6 26 14 26C14.8 26 15.6 25.9 16.3 25.6L14 32H18L15.7 25.6C16.4 25.9 17.2 26 18 26C22.4 26 26 22.4 26 18C26 10 18 4 18 4C18 4 17 7 16 7C15 7 14 4 14 4Z" fill="#1DB8F2"/>
-      <text x="34" y="26" fontFamily="Ubuntu, Verdana, sans-serif" fontSize="18" fontWeight="400" fill="white">Capgemini</text>
-    </svg>
+    <img
+      src="https://cdn.brandfetch.io/capgemini.com"
+      alt="Capgemini"
+      className={`object-contain ${className}`}
+    />
   )
 }
 
@@ -106,8 +107,8 @@ function AppInner({ embedded, workflow, onBack, workflowId = 'intervention' }) {
         setWorkflowState(s => ({ ...s, executionComplete: true }))
         // Mark Execute Action as done
         if (workflow) workflow.setNodeOverride('execute-action', 'completed')
-        // Auto-advance to Outcome & Results after a delay
-        setTimeout(() => goTo(5), 2000)
+        // Advance to Outcome & Results
+        goTo(5)
         break
       case 'backToDashboard':
         if (onBack) onBack()
@@ -235,7 +236,7 @@ function AppInner({ embedded, workflow, onBack, workflowId = 'intervention' }) {
           <CapgeminiLogo className="h-5 w-auto" />
           <div className="h-5 w-px bg-navy-mid" />
           <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded bg-[#00529B] flex items-center justify-center font-bold text-[10px] tracking-tight">AH</div>
+            <img src="https://cdn.brandfetch.io/ah.nl" alt="Albert Heijn" className="w-7 h-7 rounded object-contain" style={{ backgroundColor: '#00529B' }} />
             <div>
               <h1 className="text-sm font-medium text-white tracking-wide leading-tight">Predictive Fresh Supply Chain</h1>
               <p className="text-[10px] text-gray-500 font-light">Ahold Delhaize × Capgemini</p>
