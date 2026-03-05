@@ -14,11 +14,11 @@ import DT5_ValueAtScale from './components/DT5_ValueAtScale'
 
 // Workflow 1: Fresh Waste Intervention (6 screens)
 const INTERVENTION_SCREENS = [
-  { id: 0, title: 'Supply Chain Control Tower', subtitle: 'RAISE 2.0 — Live AI Orchestration Platform', hasInteraction: true },
+  { id: 0, title: 'Supply Chain Control Tower', subtitle: 'Agentic Supply Chain — Live AI Orchestration Platform', hasInteraction: true },
   { id: 1, title: 'Alert Analysis & AI Brief', subtitle: 'Risk Assessment + SLM Classification + LLM Synthesis', hasInteraction: true },
   { id: 2, title: 'Scenario Simulation', subtitle: 'Digital Twin — Monte Carlo Analysis', hasInteraction: true },
   { id: 3, title: 'Governance & Approval', subtitle: 'Human-in-the-Loop — Threshold Escalation', hasInteraction: true },
-  { id: 4, title: 'Autonomous Execution', subtitle: 'RAISE 2.0 — Agentic AI Platform', hasInteraction: false },
+  { id: 4, title: 'Autonomous Execution', subtitle: 'Agentic Supply Chain — Autonomous AI Execution', hasInteraction: false },
   { id: 5, title: 'Outcome & Results', subtitle: 'Before/After Impact — Intervention Complete', hasInteraction: true },
 ]
 const INTERVENTION_COMPONENTS = [S0_ControlTower, S2_AlertAnalysis, S4_Simulation, S5_Governance, S6_Execution, S7_Verification]

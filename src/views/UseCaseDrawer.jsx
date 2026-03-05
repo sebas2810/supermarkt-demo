@@ -39,7 +39,14 @@ export default function UseCaseDrawer({ useCase, onClose, navigateTo }) {
         <div className="flex-1 overflow-auto p-4 space-y-4">
           {/* Status + Layers */}
           <div className="flex items-center justify-between">
-            <StatusBadge status={useCase.status} />
+            {useCase.hasWorkflow ? (
+              <StatusBadge status={useCase.status} />
+            ) : (
+              <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-gray-500/10 border border-gray-500/30">
+                <div className="w-1.5 h-1.5 rounded-full bg-gray-600" />
+                <span className="text-[10px] font-semibold text-gray-500">Coming Soon</span>
+              </span>
+            )}
             <LayerIndicator layers={useCase.aiLayers} showLabels />
           </div>
 
@@ -151,7 +158,7 @@ export default function UseCaseDrawer({ useCase, onClose, navigateTo }) {
 
         {/* Actions */}
         <div className="flex-none p-4 border-t border-navy-mid space-y-2">
-          {useCase.hasWorkflow && (
+          {useCase.hasWorkflow ? (
             <>
               <button
                 onClick={() => {
@@ -174,6 +181,11 @@ export default function UseCaseDrawer({ useCase, onClose, navigateTo }) {
                 Open Digital Twin Demo
               </button>
             </>
+          ) : (
+            <div className="bg-navy/60 border border-navy-mid rounded-lg p-3 text-center">
+              <p className="text-[11px] text-gray-500 font-medium">Interactive demo not yet available</p>
+              <p className="text-[9px] text-gray-600 mt-0.5">This use case is on the roadmap</p>
+            </div>
           )}
           <button
             onClick={() => {

@@ -201,7 +201,7 @@ export default function PlatformShell() {
         <header className="flex-none flex items-center justify-between px-5 py-2 bg-navy-light border-b border-navy-mid/50">
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium text-white tracking-wide">RAISE Platform</span>
+              <span className="text-sm font-medium text-white tracking-wide">Agentic Supply Chain</span>
               <span className="text-[9px] text-gray-500 bg-navy-mid/50 px-1.5 py-0.5 rounded font-mono">v2.0</span>
             </div>
             <div className="h-4 w-px bg-navy-mid" />

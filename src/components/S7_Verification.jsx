@@ -89,7 +89,7 @@ export default function S7_Verification({ workflowState, onAction }) {
         <div className="bg-navy-light rounded-xl border border-risk-green/30 p-4 flex flex-col">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-6 h-6 rounded-full bg-risk-green/20 flex items-center justify-center text-risk-green text-xs">{'\u2713'}</div>
-            <h3 className="text-sm font-semibold text-risk-green">With RAISE 2.0</h3>
+            <h3 className="text-sm font-semibold text-risk-green">With Agentic Supply Chain</h3>
             <span className="text-[9px] text-gray-500 ml-auto">Agentic AI Process</span>
           </div>
           <div className="flex-1 space-y-3">

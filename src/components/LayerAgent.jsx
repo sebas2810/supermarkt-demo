@@ -34,7 +34,7 @@ export default function LayerAgent() {
           <span className="text-layer-agent text-xs font-bold">R2.0</span>
         </div>
         <div>
-          <h3 className="text-xs text-gray-400">RAISE 2.0 · Agentic AI Platform</h3>
+          <h3 className="text-xs text-gray-400">Agentic Supply Chain · AI Platform</h3>
           <p className="text-[10px] text-gray-500">Proven at Action (4,500 stores) · Heineken (70+ OpCos)</p>
         </div>
         <div className="ml-auto flex items-center gap-2 text-xs">
@@ -51,7 +51,7 @@ export default function LayerAgent() {
         <div className="col-span-2 bg-navy-light rounded-xl border border-navy-mid p-3 flex flex-col min-h-0 overflow-hidden">
           <div className="flex-none flex items-center justify-between mb-2">
             <h3 className="text-xs font-semibold text-gray-300">Agent Execution Log</h3>
-            <span className="text-[10px] text-gray-500 font-mono">RAISE 2.0 · Audit Trail</span>
+            <span className="text-[10px] text-gray-500 font-mono">Agentic Supply Chain · Audit Trail</span>
           </div>
 
           <div ref={logRef} className="flex-1 min-h-0 bg-[#0a0c14] rounded-lg p-3 font-mono text-[11px] overflow-auto border border-[#1a1e30]">

@@ -209,7 +209,7 @@ export default function S0_ControlTower({ onAction }) {
         <div className="flex-none flex items-center justify-between px-3 py-1.5 border-b border-navy-mid/50">
           <div className="flex items-center gap-2">
             <h3 className="text-[11px] font-semibold text-gray-300">Live Intervention Queue</h3>
-            <span className="text-[8px] text-gray-500 font-mono">RAISE 2.0</span>
+            <span className="text-[8px] text-gray-500 font-mono">Agentic SC</span>
           </div>
           <div className="flex items-center gap-1.5">
             {['All', 'Active', 'Escalated'].map((filter, i) => (

@@ -52,30 +52,53 @@ export default function UseCaseGallery({ navigateTo }) {
         <div className="grid grid-cols-4 gap-3">
           {filtered.map((uc, i) => {
             const deployedBrands = uc.brands.map(b => brands.find(br => br.id === b.brandId)).filter(Boolean)
+            const isInteractive = uc.hasWorkflow
             return (
               <div
                 key={uc.id}
                 onClick={() => setSelectedUC(uc)}
-                className="bg-navy-light rounded-xl border border-navy-mid p-4 cursor-pointer hover:border-gray-600 transition-all animate-fade-in group"
+                className={`rounded-xl border p-4 cursor-pointer transition-all animate-fade-in group ${
+                  isInteractive
+                    ? 'bg-navy-light border-cap-cyan/30 hover:border-cap-cyan/60 ring-1 ring-cap-cyan/10'
+                    : 'bg-navy-light/60 border-navy-mid/60 hover:border-navy-mid opacity-50 grayscale-[30%]'
+                }`}
                 style={{ animationDelay: `${i * 50}ms` }}
               >
-                {/* Domain + Status */}
+                {/* Domain + Status + Interactive badge */}
                 <div className="flex items-center justify-between mb-2">
                   <span
                     className="text-[10px] font-semibold px-2 py-0.5 rounded"
                     style={{
-                      color: DOMAIN_COLORS[uc.domain],
-                      backgroundColor: `${DOMAIN_COLORS[uc.domain]}15`,
+                      color: isInteractive ? DOMAIN_COLORS[uc.domain] : '#6b7280',
+                      backgroundColor: isInteractive ? `${DOMAIN_COLORS[uc.domain]}15` : '#6b728010',
                     }}
                   >
                     {uc.domain}
                   </span>
-                  <StatusBadge status={uc.status} />
+                  <div className="flex items-center gap-1.5">
+                    {isInteractive ? (
+                      <>
+                        <span className="text-[8px] font-bold text-cap-cyan bg-cap-cyan/10 px-1.5 py-0.5 rounded-full border border-cap-cyan/20 uppercase tracking-wider">
+                          Interactive
+                        </span>
+                        <StatusBadge status={uc.status} />
+                      </>
+                    ) : (
+                      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-gray-500/10 border border-gray-500/30">
+                        <div className="w-1.5 h-1.5 rounded-full bg-gray-600" />
+                        <span className="text-[10px] font-semibold text-gray-500">Coming Soon</span>
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 {/* Title + Description */}
-                <h3 className="text-sm font-semibold text-white mb-1 group-hover:text-cap-cyan transition-colors">{uc.name}</h3>
-                <p className="text-[10px] text-gray-400 leading-relaxed mb-3 line-clamp-2">{uc.description}</p>
+                <h3 className={`text-sm font-semibold mb-1 transition-colors ${
+                  isInteractive ? 'text-white group-hover:text-cap-cyan' : 'text-gray-400'
+                }`}>{uc.name}</h3>
+                <p className={`text-[10px] leading-relaxed mb-3 line-clamp-2 ${
+                  isInteractive ? 'text-gray-400' : 'text-gray-600'
+                }`}>{uc.description}</p>
 
                 {/* AI Layers + Execution Model */}
                 <div className="flex items-center justify-between mb-3">
@@ -89,7 +112,7 @@ export default function UseCaseGallery({ navigateTo }) {
                     {deployedBrands.slice(0, 3).map(brand => (
                       <div
                         key={brand.id}
-                        className="w-5 h-5 rounded flex items-center justify-center text-[7px] font-bold text-white"
+                        className={`w-5 h-5 rounded flex items-center justify-center text-[7px] font-bold text-white ${!isInteractive ? 'opacity-50' : ''}`}
                         style={{ backgroundColor: brand.logoColor }}
                         title={brand.name}
                       >

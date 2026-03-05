@@ -164,7 +164,7 @@ export default function LayerLLM() {
               </div>
               <div className="flex items-center gap-1.5 text-[10px]">
                 <span className="text-gray-500">→</span>
-                <span className="text-layer-agent font-semibold">Layer 4: RAISE 2.0</span>
+                <span className="text-layer-agent font-semibold">Layer 4: Agentic SC</span>
               </div>
             </div>
           )}

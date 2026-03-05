@@ -53,7 +53,7 @@ export default function S6_Execution({ workflowState, onAction }) {
         <div className="col-span-2 bg-navy-light rounded-xl border border-navy-mid p-3 flex flex-col min-h-0 overflow-hidden">
           <div className="flex-none flex items-center justify-between mb-2">
             <h3 className="text-xs font-semibold text-gray-300">Autonomous Execution Log</h3>
-            <span className="text-[10px] text-gray-500 font-mono">RAISE 2.0 · Audit Trail</span>
+            <span className="text-[10px] text-gray-500 font-mono">Agentic Supply Chain · Audit Trail</span>
           </div>
 
           <div ref={logRef} className="flex-1 min-h-0 bg-[#0a0c14] rounded-lg p-3 font-mono text-[11px] overflow-auto border border-[#1a1e30]">
