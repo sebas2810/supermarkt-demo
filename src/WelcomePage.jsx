@@ -1,10 +1,27 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const APP_VERSION = '2.0.0'
+const APP_VERSION = '2.1.0'
 const BUILD_DATE = '5 Mar 2025'
 
 const CHANGELOG = [
+  {
+    version: '2.1.0',
+    date: '5 Mar 2025',
+    title: 'Live Claude AI Chat, Brand Logos & Rich Responses',
+    changes: [
+      { type: 'added', text: 'Live Claude API integration — dashboard and chat powered by Claude Sonnet with full platform context' },
+      { type: 'added', text: 'Rich markdown responses — bold, bullet lists, tables, and headings rendered in chat' },
+      { type: 'added', text: 'Streaming typewriter effect on AI responses for live generation feel' },
+      { type: 'added', text: 'Suggested follow-up question chips after each AI response' },
+      { type: 'added', text: 'Starter question chips in empty chat state to guide first interaction' },
+      { type: 'added', text: 'Copy button and rotating thinking indicator on chat messages' },
+      { type: 'changed', text: 'Replaced all brand icons with real logos via Brandfetch CDN (AH, FL, DL, HF, SS)' },
+      { type: 'changed', text: 'Replaced Capgemini and Ahold Delhaize SVG icons with real logos across all views' },
+      { type: 'added', text: 'View Results button on Autonomous Execution step' },
+      { type: 'changed', text: 'Chat redesigned with Claude-style left/right bubbles, avatars, and timestamps' },
+    ],
+  },
   {
     version: '2.0.0',
     date: '5 Mar 2025',

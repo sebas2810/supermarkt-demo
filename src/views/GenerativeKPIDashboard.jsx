@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import { Send, Sparkles, TrendingUp, TrendingDown, Minus, AlertTriangle, CheckCircle2 } from 'lucide-react'
+import { useState, useEffect, useRef, useCallback } from 'react'
+import { Send, Sparkles, TrendingUp, TrendingDown, Minus, AlertTriangle, CheckCircle2, Copy, Check, MessageSquare, ArrowRight } from 'lucide-react'
 import { generateDashboard, queryDashboard, getFallbackDashboard } from '../lib/claude'
 import { ThinkingDots } from '../components/shared/TypewriterText'
 import { useWorkflowSafe } from '../context/WorkflowContext'
@@ -20,6 +20,138 @@ const STATUS_COLORS = {
   alert: 'border-risk-red/30 bg-risk-red/5',
 }
 
+const STARTER_QUESTIONS = [
+  'Compare waste reduction across all brands',
+  'What AI layers power the Fresh Waste use case?',
+  'Show me the ROI projection for group-wide scaling',
+  'Which brands need attention this week?',
+]
+
+const THINKING_MESSAGES = [
+  'Analysing operational data...',
+  'Querying 5 brands, 8 use cases...',
+  'Cross-referencing control tower metrics...',
+  'Synthesising AI agent insights...',
+]
+
+/* ── Typewriter streaming component ─────────────────────────── */
+function StreamingText({ text, onComplete }) {
+  const [charIndex, setCharIndex] = useState(0)
+  const done = charIndex >= text.length
+
+  useEffect(() => {
+    if (done) { onComplete?.(); return }
+    // Variable speed: faster for spaces/punctuation, slower for word starts
+    const ch = text[charIndex] || ''
+    const delay = ch === ' ' || ch === '\n' ? 5 : ch === '|' ? 2 : 12
+    const step = ch === ' ' || ch === '\n' ? Math.min(3, text.length - charIndex) : 1
+    const timer = setTimeout(() => {
+      setCharIndex(prev => Math.min(prev + step, text.length))
+    }, delay)
+    return () => clearTimeout(timer)
+  }, [charIndex, text, done, onComplete])
+
+  return <RichMessage text={done ? text : text.substring(0, charIndex)} />
+}
+
+/* ── Copy button component ──────────────────────────────────── */
+function CopyButton({ text }) {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = useCallback(async () => {
+    try {
+      await navigator.clipboard.writeText(text)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch { /* ignore */ }
+  }, [text])
+
+  return (
+    <button
+      onClick={handleCopy}
+      className="p-1 rounded hover:bg-navy-mid/50 transition-colors group"
+      title="Copy response"
+    >
+      {copied ? (
+        <Check className="w-3 h-3 text-risk-green" />
+      ) : (
+        <Copy className="w-3 h-3 text-gray-600 group-hover:text-gray-400" />
+      )}
+    </button>
+  )
+}
+
+/* ── Thinking indicator with rotating messages ──────────────── */
+function ThinkingIndicator() {
+  const [msgIndex, setMsgIndex] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setMsgIndex(prev => (prev + 1) % THINKING_MESSAGES.length)
+    }, 2000)
+    return () => clearInterval(timer)
+  }, [])
+
+  return (
+    <div className="flex gap-2.5 justify-start animate-slide-in">
+      <div className="flex-none w-7 h-7 rounded-full bg-cap-cyan/10 border border-cap-cyan/30 flex items-center justify-center mt-0.5">
+        <Sparkles className="w-3.5 h-3.5 text-cap-cyan animate-pulse" />
+      </div>
+      <div className="bg-navy-light border border-navy-mid rounded-xl rounded-bl-sm px-4 py-3">
+        <div className="flex items-center gap-2">
+          <ThinkingDots />
+          <span className="text-[11px] text-gray-400 transition-all duration-300">{THINKING_MESSAGES[msgIndex]}</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ── Follow-up suggestion chips ─────────────────────────────── */
+function FollowUpChips({ suggestions, onSelect }) {
+  if (!suggestions?.length) return null
+
+  return (
+    <div className="flex flex-wrap gap-1.5 ml-9.5 animate-slide-in">
+      {suggestions.map((q, i) => (
+        <button
+          key={i}
+          onClick={() => onSelect(q)}
+          className="flex items-center gap-1.5 px-2.5 py-1.5 text-[10px] text-gray-400 bg-navy-light border border-navy-mid rounded-lg hover:border-cap-cyan/40 hover:text-cap-cyan transition-all group"
+        >
+          <ArrowRight className="w-2.5 h-2.5 text-gray-600 group-hover:text-cap-cyan transition-colors" />
+          {q}
+        </button>
+      ))}
+    </div>
+  )
+}
+
+/* ── Starter questions (empty state) ────────────────────────── */
+function StarterQuestions({ onSelect }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-8 animate-slide-in">
+      <div className="w-12 h-12 rounded-2xl bg-cap-cyan/10 border border-cap-cyan/20 flex items-center justify-center mb-4">
+        <MessageSquare className="w-6 h-6 text-cap-cyan/60" />
+      </div>
+      <p className="text-xs text-gray-400 mb-1">Ask me anything about your supply chain</p>
+      <p className="text-[10px] text-gray-600 mb-4">Powered by Claude — I have full context on all brands, use cases, and KPIs</p>
+      <div className="flex flex-wrap justify-center gap-2 max-w-md">
+        {STARTER_QUESTIONS.map((q, i) => (
+          <button
+            key={i}
+            onClick={() => onSelect(q)}
+            className="px-3 py-2 text-[10px] text-gray-300 bg-navy-light border border-navy-mid rounded-lg hover:border-cap-cyan/40 hover:text-cap-cyan hover:bg-cap-cyan/5 transition-all"
+          >
+            {q}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/* ── Main Dashboard component ───────────────────────────────── */
 export default function GenerativeKPIDashboard({ navigateTo }) {
   const [dashboard, setDashboard] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -27,6 +159,7 @@ export default function GenerativeKPIDashboard({ navigateTo }) {
   const [query, setQuery] = useState('')
   const [queryLoading, setQueryLoading] = useState(false)
   const [messages, setMessages] = useState([])
+  const [streamingIndex, setStreamingIndex] = useState(-1) // which message is currently streaming
   const queryRef = useRef(null)
   const chatEndRef = useRef(null)
 
@@ -55,36 +188,51 @@ export default function GenerativeKPIDashboard({ navigateTo }) {
 
   const formatTime = (date) => date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
 
-  const handleQuery = async () => {
-    if (!query.trim() || queryLoading) return
-    const q = query.trim()
+  const handleQuery = async (q) => {
+    const question = (q || query).trim()
+    if (!question || queryLoading) return
     const now = new Date()
     setQuery('')
 
     // Add user message
-    setMessages(prev => [...prev, { role: 'user', text: q, time: now }])
+    setMessages(prev => [...prev, { role: 'user', text: question, time: now }])
     setQueryLoading(true)
 
-    const result = await queryDashboard(q)
+    const result = await queryDashboard(question)
     const aiTime = new Date()
     setQueryLoading(false)
 
     if (result) {
-      setMessages(prev => [...prev, { role: 'ai', text: result.answer, metrics: result.relatedMetrics, time: aiTime }])
+      const newMsg = {
+        role: 'ai',
+        text: result.answer,
+        metrics: result.relatedMetrics,
+        followups: result.suggestedFollowups,
+        time: aiTime,
+      }
+      setMessages(prev => {
+        setStreamingIndex(prev.length) // start streaming on the new message
+        return [...prev, newMsg]
+      })
     } else {
       setMessages(prev => [...prev, {
         role: 'ai',
         text: "I'm unable to connect to the Claude API right now. This is a demo — in production, I'd analyse the operational data and provide a data-driven answer.",
         metrics: [],
+        followups: [],
         time: aiTime,
       }])
     }
   }
 
+  const handleStreamComplete = useCallback(() => {
+    setStreamingIndex(-1)
+  }, [])
+
   // Auto-scroll chat to bottom
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages, queryLoading])
+  }, [messages, queryLoading, streamingIndex])
 
   if (loading) {
     return (
@@ -244,67 +392,75 @@ export default function GenerativeKPIDashboard({ navigateTo }) {
           </div>
         )}
 
+        {/* Empty state — starter questions */}
+        {messages.length === 0 && !queryLoading && (
+          <StarterQuestions onSelect={handleQuery} />
+        )}
+
         {/* Chat messages */}
         {messages.map((msg, i) => (
-          <div key={i} className={`flex gap-2.5 animate-slide-in ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            {/* AI avatar */}
-            {msg.role === 'ai' && (
-              <div className="flex-none w-7 h-7 rounded-full bg-cap-cyan/10 border border-cap-cyan/30 flex items-center justify-center mt-0.5">
-                <Sparkles className="w-3.5 h-3.5 text-cap-cyan" />
-              </div>
-            )}
+          <div key={i}>
+            <div className={`flex gap-2.5 animate-slide-in ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+              {/* AI avatar */}
+              {msg.role === 'ai' && (
+                <div className="flex-none w-7 h-7 rounded-full bg-cap-cyan/10 border border-cap-cyan/30 flex items-center justify-center mt-0.5">
+                  <Sparkles className="w-3.5 h-3.5 text-cap-cyan" />
+                </div>
+              )}
 
-            <div className={`max-w-[75%] ${msg.role === 'user' ? 'items-end' : 'items-start'} flex flex-col`}>
-              {/* Bubble */}
-              <div className={`px-3.5 py-2.5 ${
-                msg.role === 'user'
-                  ? 'bg-cap-cyan/15 border border-cap-cyan/25 rounded-xl rounded-br-sm'
-                  : 'bg-navy-light border border-navy-mid rounded-xl rounded-bl-sm'
-              }`}>
-                {msg.role === 'user'
-                  ? <p className="text-xs leading-relaxed text-white">{msg.text}</p>
-                  : <RichMessage text={msg.text} />
-                }
-                {msg.metrics?.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 mt-2 pt-2 border-t border-navy-mid/50">
-                    {msg.metrics.map((m, j) => (
-                      <div key={j} className="bg-navy/60 rounded-md px-2 py-0.5">
-                        <span className="text-[9px] text-gray-500">{m.name}</span>
-                        <span className="text-[10px] text-white font-bold ml-1">{m.value}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
+              <div className={`max-w-[80%] ${msg.role === 'user' ? 'items-end' : 'items-start'} flex flex-col`}>
+                {/* Bubble */}
+                <div className={`px-3.5 py-2.5 ${
+                  msg.role === 'user'
+                    ? 'bg-cap-cyan/15 border border-cap-cyan/25 rounded-xl rounded-br-sm'
+                    : 'bg-navy-light border border-navy-mid rounded-xl rounded-bl-sm'
+                }`}>
+                  {msg.role === 'user'
+                    ? <p className="text-xs leading-relaxed text-white">{msg.text}</p>
+                    : streamingIndex === i
+                      ? <StreamingText text={msg.text} onComplete={handleStreamComplete} />
+                      : <RichMessage text={msg.text} />
+                  }
+                  {/* Metrics chips — show after streaming completes */}
+                  {msg.role === 'ai' && streamingIndex !== i && msg.metrics?.length > 0 && (
+                    <div className="flex flex-wrap gap-1.5 mt-2 pt-2 border-t border-navy-mid/50">
+                      {msg.metrics.map((m, j) => (
+                        <div key={j} className="bg-navy/60 rounded-md px-2 py-0.5">
+                          <span className="text-[9px] text-gray-500">{m.name}</span>
+                          <span className="text-[10px] text-white font-bold ml-1">{m.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {/* Timestamp + copy button */}
+                <div className={`flex items-center gap-1.5 mt-1 ${msg.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
+                  <span className="text-[9px] text-gray-600">
+                    {msg.role === 'ai' ? 'Claude · ' : ''}{formatTime(msg.time)}
+                  </span>
+                  {msg.role === 'ai' && streamingIndex !== i && (
+                    <CopyButton text={msg.text} />
+                  )}
+                </div>
               </div>
-              {/* Timestamp */}
-              <span className={`text-[9px] text-gray-600 mt-1 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
-                {msg.role === 'ai' ? 'Claude · ' : ''}{formatTime(msg.time)}
-              </span>
+
+              {/* User avatar */}
+              {msg.role === 'user' && (
+                <div className="flex-none w-7 h-7 rounded-full bg-cap-blue flex items-center justify-center text-[9px] font-bold text-white mt-0.5">
+                  KC
+                </div>
+              )}
             </div>
 
-            {/* User avatar */}
-            {msg.role === 'user' && (
-              <div className="flex-none w-7 h-7 rounded-full bg-cap-blue flex items-center justify-center text-[9px] font-bold text-white mt-0.5">
-                KC
-              </div>
+            {/* Follow-up suggestion chips — show after streaming completes */}
+            {msg.role === 'ai' && i === messages.length - 1 && streamingIndex !== i && !queryLoading && (
+              <FollowUpChips suggestions={msg.followups} onSelect={handleQuery} />
             )}
           </div>
         ))}
 
         {/* Thinking indicator */}
-        {queryLoading && (
-          <div className="flex gap-2.5 justify-start animate-slide-in">
-            <div className="flex-none w-7 h-7 rounded-full bg-cap-cyan/10 border border-cap-cyan/30 flex items-center justify-center mt-0.5">
-              <Sparkles className="w-3.5 h-3.5 text-cap-cyan" />
-            </div>
-            <div className="bg-navy-light border border-navy-mid rounded-xl rounded-bl-sm px-4 py-3">
-              <div className="flex items-center gap-2">
-                <ThinkingDots />
-                <span className="text-[11px] text-gray-400">Analysing...</span>
-              </div>
-            </div>
-          </div>
-        )}
+        {queryLoading && <ThinkingIndicator />}
 
         <div ref={chatEndRef} />
       </div>
@@ -324,7 +480,7 @@ export default function GenerativeKPIDashboard({ navigateTo }) {
             />
           </div>
           <button
-            onClick={handleQuery}
+            onClick={() => handleQuery()}
             disabled={!query.trim() || queryLoading}
             className="p-2.5 bg-cap-cyan text-navy rounded-lg hover:bg-cap-cyan/80 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           >

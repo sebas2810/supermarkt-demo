@@ -101,7 +101,7 @@ export async function queryDashboard(question) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
-        max_tokens: 1536,
+        max_tokens: 2048,
         messages: [{
           role: 'user',
           content: prompts.query.user_template
